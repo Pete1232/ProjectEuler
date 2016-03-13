@@ -1,4 +1,4 @@
-object Main extends App{
+object SumSquareDiff extends App{
   val stop = args(0).toInt
   println(squareSum(end = stop) - sumSquare(end = stop))
 

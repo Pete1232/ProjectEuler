@@ -1,4 +1,4 @@
-object Main extends App{
+object Prime extends App{
   println(nthPrime(target = args(0).toInt))
 
   def nthPrime(n: Int = 1, number: Int = 2, target: Int): Int ={
