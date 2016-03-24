@@ -7,17 +7,17 @@ object ProductSeries extends App {
     shortenedNumber.take(size).toCharArray
   }
 
-  def calculateProduct(number: Array[Char]): Int = {
-    val digitList = number.map(char => char.asDigit)
+  def calculateProduct(number: Array[Char]): Long = {
+    val digitList = number.map(char => char.asDigit.toLong)
     digitList.product
   }
 
-  def findGreatestProduct(longNumber: String, size: Int, highest: Int = 0, index: Int = 0): Int = {
+  def findGreatestProduct(longNumber: String, size: Int, highest: Long = 0, index: Int = 0): Long = {
     val thisNumber = getNumberFromIndex(longNumber, index, size)
     val thisProduct = calculateProduct(thisNumber)
-    if(thisProduct > highest & index < longNumber.size)
+    if(thisProduct > highest & index < longNumber.size-1)
       findGreatestProduct(longNumber, size, thisProduct, index+1)
-    else if(index < longNumber.size)
+    else if(index < longNumber.size-1)
       findGreatestProduct(longNumber, size, highest, index+1)
     else
       highest
