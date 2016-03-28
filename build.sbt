@@ -1,7 +1,11 @@
 lazy val commonSettings = Seq(
   organization := "Pete1232",
   version := "0.1.9",
-  scalaVersion := "2.11.7"
+  scalaVersion := "2.11.7",
+  libraryDependencies ++= Seq(
+    "org.scalactic" %% "scalactic" % "2.2.6",
+    "org.scalatest" %% "scalatest" % "2.2.6" % "test"
+  )
 )
 
 lazy val pe6 = (project in file("6_SumSquareDiff")).
