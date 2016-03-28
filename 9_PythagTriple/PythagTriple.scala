@@ -1,5 +1,5 @@
 object PythagTriple extends App {
-  getTriple(args(0).toInt)
+  getTriple(2)
   // Too difficult to calculate factor pairs from this
   // Should still use smallest divisor, but divide and pair up as it works through instead of at the end
   // Probably be useful for other problems so left here for now
@@ -34,7 +34,7 @@ object PythagTriple extends App {
   }
 
   // Can this be done more efficiently with a bit of algebra?
-  def getTriple(n: Int) = {
+  def getTriple(n: Int): Unit = {
     // Step 1: Set an even value for r
     // Step 2: Calculate r^2/2. Then st = r^2/2
     // Step 3: Find all PAIRS of factors of r^2/2 <-------probably the hard part
@@ -69,6 +69,32 @@ object PythagTriple extends App {
         case None => getDivisorPairs(n, i + 1, divisorList)
       }
     }
-    println(getDivisorPairs(n))
+
+    // Step 4 & 5
+    def checkPairs(pairs: List[(Int, Int)]): Unit ={
+      def whenPairExists(pair: (Int, Int)): Unit = {
+        val s = pair._1
+        val t = pair._2
+        if (isTarget(s, t)) {
+          val x = r + s
+          val y = r + t
+          val z = r + s + t
+          println("Found it!: Triple ("+x+", "+y+", "+z+") with product "+(x*y*z))
+        }
+        else
+          checkPairs(pairs.tail)
+      }
+      def isTarget(s: Int, t: Int): Boolean ={
+        val x = r + s
+        val y = r + t
+        val z = r + s + t
+        3*r + 2*s + 2*t==1000
+      }
+      pairs.headOption match {
+        case Some(pair) => whenPairExists(pair)
+        case None => getTriple(n+1)
+      }
+    }
+    checkPairs(getDivisorPairs(st))
   }
 }
