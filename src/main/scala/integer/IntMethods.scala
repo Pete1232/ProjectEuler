@@ -32,4 +32,21 @@ object IntMethods {
       case None => getDivisorPairs(n, i + 1, divisorList)
     }
   }
+
+  /**
+    * Returns true if a given integer is prime
+    * @param number the given integer
+    * @return true is number was prime and false otherwise
+    */
+  def isPrime(number: Int) = {
+    def checkPrime(divisor: Int = 2, number: Int): Boolean = {
+      if(divisor == number)
+        true
+      else if(number%divisor != 0)
+        checkPrime(divisor+1, number)
+      else
+        false
+    }
+    checkPrime(number = number)
+  }
 }

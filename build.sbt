@@ -9,12 +9,12 @@ lazy val commonSettings = Seq(
 )
 
 lazy val projecteuler = (project in file(".")).
-  settings(commonSettings: _*).
-  settings(packageBin in Compile := file(s"target/scala-2.11/${name.value}_${scalaBinaryVersion.value}.jar"))
+  settings(commonSettings: _*)
 lazy val pe6 = (project in file("./solutions/1-20/6")).
   settings(commonSettings: _*)
 lazy val pe7 = (project in file("./solutions/1-20/7")).
-  settings(commonSettings: _*)
+  settings(commonSettings: _*).
+  dependsOn(projecteuler)
 lazy val pe8 = (project in file("./solutions/1-20/8")).
   settings(commonSettings: _*)
 lazy val pe9 = (project in file("./solutions/1-20/9")).
