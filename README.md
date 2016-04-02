@@ -9,7 +9,6 @@ This is all configured in build.sbt.
 
 The code in the parent project can be put within the scope of a particular solution using the ```dependsOn``` keyword.
 The code can then be imported as any other library (e.g. ```import integer.IntMethods```).
-Note that IntelliJ (and probably other IDEs) will not resolve the import correctly, but it does work.
 
 ###Adding a new solution (for my reference)
 * Add a new folder and scala script
