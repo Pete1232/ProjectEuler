@@ -20,3 +20,6 @@ lazy val pe8 = (project in file("./solutions/1-20/8")).
 lazy val pe9 = (project in file("./solutions/1-20/9")).
   settings(commonSettings: _*).
   dependsOn(projecteuler)
+lazy val pe10 = (project in file("./solutions/1-20/10")).
+  settings(commonSettings: _*).
+  dependsOn(projecteuler)
