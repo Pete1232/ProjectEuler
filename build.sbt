@@ -6,7 +6,8 @@ lazy val commonSettings = Seq(
     "org.scalactic" %% "scalactic" % "2.2.6",
     "org.scalatest" %% "scalatest" % "2.2.6" % "test",
     "org.scala-lang.modules" %% "scala-xml" % "1.0.4"
-  )
+  ),
+  scalacOptions ++= Seq("-feature", "-language:postfixOps")
 )
 
 lazy val projecteuler = (project in file(".")).
