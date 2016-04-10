@@ -1,6 +1,7 @@
 
 #ProjectEuler
 My solutions to the problems on projecteuler.net
+(Note: currently does not include problems 1-5. Did these in python a while ago and lost the scripts)
 
 ##Project structure
 The project is build at the top level with sbt to contain code that is/could be reusable across multiple problems. 
