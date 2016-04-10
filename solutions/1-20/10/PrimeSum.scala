@@ -1,10 +1,9 @@
 import integer.IntMethods
 
 object PrimeSum extends App {
-  println(IntMethods.isPrime(args(0).toInt))
-  //Need to make isPrime more efficient
-  // println(primeAdder(2, args(0).toInt, 0))
-  def primeAdder(i: Int, end: Int, currentTotal: Int): Int = {
+  println(primeAdder(2, args(0).toInt, 0))
+  def primeAdder(j: Long, end: Long, currentTotal: Long): Long = {
+    val i = 2*j-1
     if(IntMethods.isPrime(i)){
       if(i>=end){
         currentTotal

@@ -38,8 +38,8 @@ object IntMethods {
     * @param number the given integer
     * @return true is number was prime and false otherwise
     */
-  def isPrime(number: Int) = {
-    def checkPrime(divisor: Int = 2, number: Int): Boolean = {
+  def isPrime(number: Long) = {
+    def checkPrime(divisor: Long = 2, number: Long): Boolean = {
       if(divisor == number)
         true
       else if(number%divisor != 0)
