@@ -80,4 +80,10 @@ class IntMethodsSpec extends UnitSpec{
     IntMethods.lcm(23, 12) shouldBe 276
     IntMethods.lcm(16, 64) shouldBe 64
   }
+  "Calling lcm on a list of numbers" should "return their lowest commn multiple" in {
+    IntMethods.lcm(List(2, 2)) shouldBe 2
+    IntMethods.lcm(List(4, 5, 6)) shouldBe 60
+    IntMethods.lcm(List(16, 64)) shouldBe 64
+    IntMethods.lcm(List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) shouldBe 2520
+  }
 }

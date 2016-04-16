@@ -82,6 +82,7 @@ package integer
 
   /**
     * Returns a list containing all prime factors of a number
+    *
     * @param x the number to factorise
     * @return a list of all prime factors of x
     */
@@ -113,5 +114,25 @@ package integer
     val factorsOfY = calculatePrimeFactors(y)
     val mergedFactors = factorsOfX ++ factorsOfY.diff(factorsOfX)
     mergedFactors.product
+  }
+
+  /**
+    * Calculates the lcm of an arbitrarily sized list of numbers
+    *
+    * @param list the list of numbers
+    * @return the lcm of all numbers in list
+    */
+  def lcm[T](list: List[T])(implicit n: Numeric[T]): T = {
+    def callbackLoop(list: List[T]): T = {
+      if(list.size == 1){
+        list.head
+      }
+      else {
+        val x = list.head
+        val y = list.last
+        callbackLoop(list.drop(1).dropRight(1).::(lcm(x, y)))
+      }
+    }
+    callbackLoop(list)
   }
 }
