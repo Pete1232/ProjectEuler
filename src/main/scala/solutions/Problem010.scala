@@ -3,8 +3,9 @@ package solutions
 import integer.IntMethods
 
 object Problem010 extends App {
-  println(primeAdder(2, 10))
-  def primeAdder(j: Long, end: Long, currentTotal: Long = 2): Long = {
+  private val end = 2000000
+  println(primeAdder(end = end))
+  def primeAdder(j: Long = 2, end: Long, currentTotal: Long = 2): Long = {
     val i = 2*j-1
     if(IntMethods.isPrime(i)){
       if(i>=end){

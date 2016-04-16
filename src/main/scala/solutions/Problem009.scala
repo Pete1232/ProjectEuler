@@ -5,7 +5,6 @@ import integer.IntMethods
 object Problem009 extends App {
   getTriple(2)
 
-  // Can this be done more efficiently with a bit of algebra?
   def getTriple(n: Int): Unit = {
     // Step 1: Set an even value for r
     // Step 2: Calculate r^2/2. Then st = r^2/2

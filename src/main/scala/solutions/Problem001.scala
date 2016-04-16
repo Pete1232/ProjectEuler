@@ -1,10 +1,10 @@
 package solutions
 
 object Problem001 extends App{
-  val end = 1000
+  private val end = 1000
   println(addToSumUntilEnd(end))
 
-  private def addToSumUntilEnd(end: Int, n: Int = 1, sum: Int = 0): Int = {
+  def addToSumUntilEnd(end: Int, n: Int = 1, sum: Int = 0): Int = {
     if (n < end) {
       if (n % 3 == 0 || n % 5 == 0) {
         addToSumUntilEnd(end, n + 1, sum + n)

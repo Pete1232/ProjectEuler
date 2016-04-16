@@ -1,7 +1,7 @@
-import org.scalatest._
+import base.UnitSpec
 import integer.IntMethods
 
-class IntMethodsSpec extends FlatSpec with Matchers{
+class IntMethodsSpec extends UnitSpec{
 
   val primeByte: Byte = 7
   val primeShort: Short = 17669

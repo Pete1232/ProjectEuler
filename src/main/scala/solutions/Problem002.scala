@@ -5,7 +5,7 @@ object Problem002 extends App{
   private val end = 4000000
   println(addToSumUntilEnd(end))
 
-  private def addToSumUntilEnd(end: Int, i: Int = 1, j: Int = 2, sum: Int = 0): Int = {
+  def addToSumUntilEnd(end: Int, i: Int = 1, j: Int = 2, sum: Int = 0): Int = {
     if(j<end) {
       if (j % 2 == 0) {
         addToSumUntilEnd(end, j, i + j, sum + j)
