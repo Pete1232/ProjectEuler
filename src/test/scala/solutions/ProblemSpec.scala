@@ -18,6 +18,23 @@ class ProblemSpec extends UnitSpec{
     val flippedList = List((7L,3L), (26L, 5L), (20L, 11L))
     Problem003.findLargestPrime(flippedList) shouldBe 11L
   }
+  "Calling Problem004.isPalindrome with a palindrome" should "return true" in {
+    val odd = "90909".toCharArray
+    Problem004.isPalindrome(odd) shouldBe true
+    val even = "9009".toCharArray
+    Problem004.isPalindrome(even) shouldBe true
+  }
+  "Calling Problem004.isPalindrome with a non-palindrome" should "return false" in {
+    val odd = "99900".toCharArray
+    Problem004.isPalindrome(odd) shouldBe false
+    val even = "9990".toCharArray
+    Problem004.isPalindrome(even) shouldBe false
+  }
+  "Calling Problem004.largestPalindrome for 2 digits" should "return 9009" in {
+    val lowerLimit = 10
+    val start = 99
+    Problem004.largestPalindrome(lowerLimit, start, start, start) shouldBe 9009
+  }
   "Calling Problem006.squareSum with 10" should "return 385" in {
     val end = 10
     Problem006.squareSum(end = end) shouldBe 385
