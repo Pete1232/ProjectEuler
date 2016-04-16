@@ -1,3 +1,5 @@
+package solutions
+
 import integer.IntMethods
 
 object PythagTriple extends App {
