@@ -57,4 +57,61 @@ package integer
     }
     checkPrime(number = n.toLong(number))
   }
+
+  /**
+    * A generic division method to make up for the lack of support in the Scala Numeric class
+    *
+    * @param divisor the number to divide by.
+    * @param number the number to divide
+    * @return Some(number/divisor) if number was divisible by divisor, and None otherwise
+    */
+  def divide[T](divisor: T, number: T)(implicit n: Numeric[T]): Option[T] = {
+    def divideLoop(d: T, x: T, i: T = n.one): Option[T] = {
+      if(n.gt(n.times(d, i), x)){
+        None
+      }
+      else if(n.times(i, d) == x){
+        Some(i)
+      }
+      else{
+        divideLoop(d, x, n.plus(i, n.one))
+      }
+    }
+    divideLoop(divisor, number)
+  }
+
+  /**
+    * Returns a list containing all prime factors of a number
+    * @param x the number to factorise
+    * @return a list of all prime factors of x
+    */
+  def calculatePrimeFactors[T](x: T)(implicit n: Numeric[T]): List[T] = {
+    def callbackLoop(divisor: T, number: T, list: List[T] = List()): List[T] = {
+      if (n.gt(divisor, number)) {
+        list
+      }
+      else {
+        val divisionResult = divide(divisor, number)
+        divisionResult match {
+          case Some(_) => callbackLoop(divisor, divisionResult.get, list :+ divisor)
+          case None => callbackLoop(n.plus(divisor, n.one), number, list)
+        }
+      }
+    }
+    callbackLoop(n.plus(n.one, n.one), x)
+  }
+
+  /**
+    * Builds on the calculatePrimeFactors method to find the lcm of two numbers
+    *
+    * @param x the first number
+    * @param y the second number
+    * @return the lcm of x and y
+    */
+  def lcm[T](x: T, y: T)(implicit n: Numeric[T]): T = {
+    val factorsOfX = calculatePrimeFactors(x)
+    val factorsOfY = calculatePrimeFactors(y)
+    val mergedFactors = factorsOfX ++ factorsOfY.diff(factorsOfX)
+    mergedFactors.product
+  }
 }
