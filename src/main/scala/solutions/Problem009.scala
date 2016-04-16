@@ -2,7 +2,7 @@ package solutions
 
 import integer.IntMethods
 
-object Problem9 extends App {
+object Problem009 extends App {
   getTriple(2)
 
   // Can this be done more efficiently with a bit of algebra?
@@ -14,29 +14,30 @@ object Problem9 extends App {
     // Step 5: See if x+y+z = 1000. The result will be relatively small so this should be efficient enough
 
     //Step 1
-    val r = 2*n
+    val r: Long = 2*n
 
     //Step 2
-    val st = r*r/2
+    val st: Long = r*r/2
 
     //Step 3
     //IntMethods.getDivisorPairs
 
     // Step 4 & 5
-    def checkPairs(pairs: List[(Int, Int)]): Unit ={
-      def whenPairExists(pair: (Int, Int)): Unit = {
+    def checkPairs(pairs: List[(Long, Long)]): Unit ={
+      def whenPairExists(pair: (Long, Long)): Unit = {
         val s = pair._1
         val t = pair._2
-        if (isTarget(s, t)) {
+        if(isTarget(s, t)) {
           val x = r + s
           val y = r + t
           val z = r + s + t
-          println("Found it!: Triple ("+x+", "+y+", "+z+") with product "+(x*y*z))
+          println("Found it!: Triple (" + x + ", " + y + ", " + z + ") with product " + (x*y*z))
         }
-        else
+        else{
           checkPairs(pairs.tail)
+        }
       }
-      def isTarget(s: Int, t: Int): Boolean ={
+      def isTarget(s: Long, t: Long): Boolean ={
         val x = r + s
         val y = r + t
         val z = r + s + t
@@ -44,9 +45,10 @@ object Problem9 extends App {
       }
       pairs.headOption match {
         case Some(pair) => whenPairExists(pair)
-        case None => getTriple(n+1)
+        case None => getTriple(n + 1)
       }
     }
-    checkPairs(IntMethods.getDivisorPairs(st))
+    val pairs: List[(Long, Long)] = IntMethods.getDivisorPairs(st)
+    checkPairs(pairs)
   }
 }

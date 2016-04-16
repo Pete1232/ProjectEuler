@@ -1,9 +1,8 @@
 package solutions
 
-object Problem2 extends App{
+object Problem002 extends App{
 
   private val end = 4000000
-  //noinspection ScalaStyle
   println(addToSumUntilEnd(end))
 
   private def addToSumUntilEnd(end: Int, i: Int = 1, j: Int = 2, sum: Int = 0): Int = {

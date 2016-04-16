@@ -3,28 +3,7 @@ package integer
 /**
   * Contains methods that are applicable to any integer, and likely to be reusable
   */
-object IntMethods {
-  def getDivisorPairsLong(n: Long, i: Long = 1, divisorList: List[(Long, Long)] = Nil): List[(Long, Long)] ={
-    def makeDivisorPair(d: Long, n: Long): Option[(Long, Long)] ={
-      if(n % d == 0)
-        Some(d, n/d)
-      else
-        None
-    }
-    val pair = makeDivisorPair(i, n)
-
-    pair match {
-      case Some(pair) => {
-        if(divisorList.contains(pair.swap)){
-          divisorList
-        }
-        else{
-          getDivisorPairsLong(n, i + 1, divisorList :+ pair)
-        }
-      }
-      case None => getDivisorPairsLong(n, i + 1, divisorList)
-    }
-  }
+  object IntMethods {
 
   /**
     * Returns a list of all possible divisor pairs of a given integer
@@ -34,27 +13,29 @@ object IntMethods {
     * @param divisorList the current list of found divisors to iterate, starting at Nil
     * @return the complete list of pairs
     */
-  def getDivisorPairs(n: Int, i: Int = 1, divisorList: List[(Int, Int)] = Nil): List[(Int, Int)] ={
-    def makeDivisorPair(d: Int, n: Int): Option[(Int, Int)] ={
-      if(n % d == 0)
-        Some(d, n/d)
-      else
-        None
-    }
-    val pair = makeDivisorPair(i, n)
-
-    pair match {
-      case Some(pair) => {
-        if(divisorList.contains(pair.swap)){
-          divisorList
+    def getDivisorPairs[T](n: T, i: T = 1, divisorList: List[(T, T)] = Nil)(implicit num: Numeric[T]): List[(T, T)] ={
+      def makeDivisorPair(d: Long, n: Long): Option[(T, T)] ={
+        if(n % d == 0) {
+          Some(d.asInstanceOf[T], (n / d).asInstanceOf[T])
         }
-        else{
-          getDivisorPairs(n, i + 1, divisorList :+ pair)
+        else {
+          None
         }
       }
-      case None => getDivisorPairs(n, i + 1, divisorList)
+      val pair = makeDivisorPair(num.toLong(i), num.toLong(n))
+
+      pair match {
+        case Some(pair) => {
+          if(divisorList.contains(pair.swap)){
+            divisorList
+          }
+          else{
+            getDivisorPairs(n, num.plus(i, num.one), divisorList :+ pair.copy(pair._1, pair._2))
+          }
+        }
+        case None => getDivisorPairs(n, num.plus(i, num.one), divisorList)
+      }
     }
-  }
 
   /**
     * Method to determine if the given integer was prime.

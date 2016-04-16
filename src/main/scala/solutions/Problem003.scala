@@ -2,11 +2,10 @@ package solutions
 
 import integer.IntMethods
 
-object Problem3 extends App{
+object Problem003 extends App{
   val n = 600851475143L
 
-  //noinspection ScalaStyle
-  println(findLargestPrime(IntMethods.getDivisorPairsLong(n).tail))
+  println(findLargestPrime(IntMethods.getDivisorPairs(n).tail))
 
   private def findLargestPrime(list: List[(Long, Long)], max: Long = 0): Long = {
     if (!list.isEmpty) {
