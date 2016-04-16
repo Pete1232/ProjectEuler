@@ -2,7 +2,7 @@ package solutions
 
 import integer.IntMethods
 
-object PythagTriple extends App {
+object Problem9 extends App {
   getTriple(2)
 
   // Can this be done more efficiently with a bit of algebra?

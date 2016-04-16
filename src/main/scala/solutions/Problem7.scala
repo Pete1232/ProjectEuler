@@ -2,7 +2,7 @@ package solutions
 
 import integer.IntMethods
 
-object Prime extends App{
+object Problem7 extends App{
   println(nthPrime(target = args(0).toInt))
 
   def nthPrime(n: Int = 1, number: Int = 2, target: Int): Int ={

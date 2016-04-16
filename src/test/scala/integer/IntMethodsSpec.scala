@@ -7,28 +7,36 @@ import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class IntMethodsSpec extends FlatSpec with Matchers{
-  "Calling isPrime on an Int" should "return true if that integer is prime" in {
-    IntMethods.isPrime(5) shouldBe true
-    IntMethods.isPrime(97) shouldBe true
-    IntMethods.isPrime(1999993) shouldBe true
+  "Calling isPrime on a byte" should "return true if it is a prime number" in {
+    val primeByte: Byte = 7
+    IntMethods.isPrime(primeByte) shouldBe true
   }
-
-  it should "return false if that integer is not prime" in {
-    IntMethods.isPrime(4) shouldBe false
-    IntMethods.isPrime(85) shouldBe false
-    IntMethods.isPrime(1999997) shouldBe false
+  it should "return false if that number is not prime" in {
+    val compByte: Byte = 9
+    IntMethods.isPrime(compByte) shouldBe false
   }
-
-  it should "return a result in a reasonable time for any number that is small enough" in {
-    val startTime = System.currentTimeMillis()
-    val result: Future[Boolean] = Future {
-      // small enough number
-      IntMethods.isPrime(1999993)
-    }
-    // reasonable time (based on 60 seconds for problem 10)
-    Await.result(result, 30 microsecond)
-    ScalaFutures.whenReady(result) {s =>
-      s shouldBe true
-    }
+  "Calling isPrime on a short" should "return true if it is a prime number" in {
+    val primeShort: Short = 17669
+    IntMethods.isPrime(primeShort) shouldBe true
+  }
+  it should "return false if that number is not prime" in {
+    val compShort: Short = 17671
+    IntMethods.isPrime(compShort) shouldBe false
+  }
+  "Calling isPrime on an int" should "return true if it is a prime number" in {
+    val primeInt: Int = 101921
+    IntMethods.isPrime(primeInt) shouldBe true
+  }
+  it should "return false if that number is not prime" in {
+    val compInt: Int = 101923
+    IntMethods.isPrime(compInt) shouldBe false
+  }
+  "Calling isPrime on a long" should "return true if it is a prime number" in {
+    val primeLong: Long = 2147484991L
+    IntMethods.isPrime(primeLong) shouldBe true
+  }
+  it should "return false if that number is not prime" in {
+    val compLong: Long = 2147484993L
+    IntMethods.isPrime(compLong) shouldBe false
   }
 }

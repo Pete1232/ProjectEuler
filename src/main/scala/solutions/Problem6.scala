@@ -1,6 +1,6 @@
 package solutions
 
-object SumSquareDiff extends App{
+object Problem6 extends App{
   val stop = args(0).toInt
   println(squareSum(end = stop) - sumSquare(end = stop))
 
