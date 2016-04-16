@@ -2,7 +2,7 @@ package solutions
 
 import base.UnitSpec
 
-class Problem001_010 extends UnitSpec{
+class ProblemSpec extends UnitSpec{
 
   "Calling Problem001.addToSumUntilEnd with 10" should "return 23" in {
     val end = 10
