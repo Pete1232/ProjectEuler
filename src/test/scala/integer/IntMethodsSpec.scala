@@ -6,11 +6,11 @@ class IntMethodsSpec extends UnitSpec{
   val primeByte: Byte = 7
   val primeShort: Short = 17669
   val primeInt: Int = 101921
-  val primeLong: Long = 2147484991L
+  val primeLong: Long = 101921L
   val compByte: Byte = 9
   val compShort: Short = 17671
   val compInt: Int = 101923
-  val compLong: Long = 2147484993L
+  val compLong: Long = 101923L
 
   "Calling isPrime on a number" should "return true if the number is a prime integer of type byte" in {
     IntMethods.isPrime(primeByte) shouldBe true
@@ -50,7 +50,7 @@ class IntMethodsSpec extends UnitSpec{
     IntMethods.getDivisorPairs(compInt) shouldBe listInt
   }
   it should "return a list of all a numbers divisor pairs if it is of type long" in {
-    val listLong = List[(Long, Long)]((1L, 2147484993L), (3L, 715828331L))
+    val listLong = List[(Long, Long)]((1L, 101923L), (227L, 449L))
     IntMethods.getDivisorPairs(compLong) shouldBe listLong
   }
 }

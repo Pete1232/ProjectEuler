@@ -10,7 +10,7 @@ object Problem003 extends App{
   def findLargestPrime(list: List[(Long, Long)], max: Long = 0): Long = {
     if (!list.isEmpty) {
       val firstEntry = list.head._1
-      val secondEntry = list.head._1
+      val secondEntry = list.head._2
 
       if (IntMethods.isPrime(firstEntry)) {
         findLargestPrime(list.tail, firstEntry)

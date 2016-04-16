@@ -15,6 +15,8 @@ class ProblemSpec extends UnitSpec{
   "Calling Problem003.findLargestPrime" should "return the largest prime in a list of long tuples" in {
     val list = List((3L,7L), (5L, 26L), (11L, 20L))
     Problem003.findLargestPrime(list) shouldBe 11L
+    val flippedList = List((7L,3L), (26L, 5L), (20L, 11L))
+    Problem003.findLargestPrime(flippedList) shouldBe 11L
   }
   "Calling Problem006.squareSum with 10" should "return 385" in {
     val end = 10
