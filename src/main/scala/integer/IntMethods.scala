@@ -1,5 +1,7 @@
 package integer
 
+import scala.annotation.tailrec
+
 /**
   * Contains methods that are applicable to any integer, and likely to be reusable
   */
@@ -13,6 +15,7 @@ package integer
     * @param divisorList the current list of found divisors to iterate, starting at Nil
     * @return the complete list of pairs
     */
+    @tailrec
     def getDivisorPairs[T](n: T, i: T = 1, divisorList: List[(T, T)] = Nil)(implicit num: Numeric[T]): List[(T, T)] ={
       def makeDivisorPair(d: Long, n: Long): Option[(T, T)] ={
         if(n % d == 0) {
@@ -44,6 +47,7 @@ package integer
     * @return true if the number was prime and false otherwise
     */
   def isPrime[T](number: T)(implicit n: Numeric[T]): Boolean = {
+    @tailrec
     def checkPrime(divisor: Long = 2, number: Long): Boolean = {
       if(divisor == number) {
         true
@@ -66,6 +70,7 @@ package integer
     * @return Some(number/divisor) if number was divisible by divisor, and None otherwise
     */
   def divide[T](divisor: T, number: T)(implicit n: Numeric[T]): Option[T] = {
+    @tailrec
     def divideLoop(d: T, x: T, i: T = n.one): Option[T] = {
       if(n.gt(n.times(d, i), x)){
         None
@@ -87,6 +92,7 @@ package integer
     * @return a list of all prime factors of x
     */
   def calculatePrimeFactors[T](x: T)(implicit n: Numeric[T]): List[T] = {
+    @tailrec
     def callbackLoop(divisor: T, number: T, list: List[T] = List()): List[T] = {
       if (n.gt(divisor, number)) {
         list
@@ -123,6 +129,7 @@ package integer
     * @return the lcm of all numbers in list
     */
   def lcm[T](list: List[T])(implicit n: Numeric[T]): T = {
+    @tailrec
     def callbackLoop(list: List[T]): T = {
       if(list.size == 1){
         list.head
