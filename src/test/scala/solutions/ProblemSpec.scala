@@ -65,9 +65,9 @@ class ProblemSpec extends UnitSpec{
     val end = 10
     Problem010.primeAdder(end = end) shouldBe 17
   }
-  "Calling Problem11.parseGrid" should "parse the Problem11Grid.csv into a sequence of sequences" in {
-    Problem011.parseGrid.apply(0).apply(0) shouldBe 8
-    Problem011.parseGrid.apply(5).apply(2) shouldBe 32
-    Problem011.parseGrid.apply(19).apply(19) shouldBe 48
+  "Calling Problem11.parseGrid" should "parse the given csv into a sequence of sequences" in {
+    Problem011.parseGrid("Problem011Grid").apply(0).apply(0) shouldBe 8
+    Problem011.parseGrid("Problem011Grid").apply(5).apply(2) shouldBe 32
+    Problem011.parseGrid("Problem011Grid").apply(19).apply(19) shouldBe 48
   }
 }
