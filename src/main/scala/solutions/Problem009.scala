@@ -2,7 +2,7 @@ package solutions
 
 import integer.IntMethods
 
-object Problem009 extends App {
+object Problem009 extends App with IntMethods{
   getTriple(2)
 
   def getTriple(n: Int): Unit = {
@@ -47,7 +47,7 @@ object Problem009 extends App {
         case None => getTriple(n + 1)
       }
     }
-    val pairs: List[(Long, Long)] = IntMethods.getDivisorPairs(st)
+    val pairs: List[(Long, Long)] = getDivisorPairs(st)
     checkPairs(pairs)
   }
 }

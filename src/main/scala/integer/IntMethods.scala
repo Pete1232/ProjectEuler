@@ -5,7 +5,7 @@ import scala.annotation.tailrec
 /**
   * Contains methods that are applicable to any integer, and likely to be reusable
   */
-  object IntMethods {
+  trait IntMethods {
 
   /**
     * Returns a list of all possible divisor pairs of a given integer
@@ -16,7 +16,7 @@ import scala.annotation.tailrec
     * @return the complete list of pairs
     */
     @tailrec
-    def getDivisorPairs[T](n: T, i: T = 1, divisorList: List[(T, T)] = Nil)(implicit num: Numeric[T]): List[(T, T)] ={
+    final def getDivisorPairs[T](n: T, i: T = 1, divisorList: List[(T, T)] = Nil)(implicit num: Numeric[T]): List[(T, T)] ={
       def makeDivisorPair(d: Long, n: Long): Option[(T, T)] ={
         if(n % d == 0) {
           Some(d.asInstanceOf[T], (n / d).asInstanceOf[T])

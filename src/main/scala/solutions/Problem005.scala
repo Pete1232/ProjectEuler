@@ -2,7 +2,7 @@ package solutions
 
 import integer.IntMethods
 
-object Problem005 extends App{
+object Problem005 extends App with IntMethods{
   private val numbers = Range(0, 20, 1)
-  println(IntMethods.lcm(numbers.toList))
+  println(lcm(numbers.toList))
 }
