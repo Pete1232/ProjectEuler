@@ -18,8 +18,8 @@ object Problem011 {
 
   def maxSumInColumn(column: Int, sumSize: Int)(implicit grid: Seq[Seq[Int]]): Int = {
     require(sumSize < grid.length)
-    def getNextX(startRow: Int, X: Int): Seq[Option[Int]] =
-      for (row <- startRow + X until startRow by -1) yield
+    def getNextX(startRow: Int, X: Int) =
+      for (row <- startRow until startRow + X) yield
         maybeGetAt(row, column)
 
     (for ( rowNumber <- grid.indices ) yield
