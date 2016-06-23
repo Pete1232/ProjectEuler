@@ -79,21 +79,21 @@ class ProblemSpec extends UnitSpec{
   )
 
   "Calling Problem11.parseGrid" should "parse the given csv into a sequence of sequences" in {
-    Problem011.parseGrid("Problem011Grid").apply(0).apply(0) shouldBe 8
-    Problem011.parseGrid("Problem011Grid").apply(5).apply(2) shouldBe 32
-    Problem011.parseGrid("Problem011Grid").apply(19).apply(19) shouldBe 48
+    Problem011Methods.parseGrid("Problem011Grid").apply(0).apply(0) shouldBe 8
+    Problem011Methods.parseGrid("Problem011Grid").apply(5).apply(2) shouldBe 32
+    Problem011Methods.parseGrid("Problem011Grid").apply(19).apply(19) shouldBe 48
   }
   "Calling Problem11.maybeGetAt" should "return the element at the requested index if it exists" in {
-    Problem011.maybeGetAt(0, 0) shouldBe Some(1)
-    Problem011.maybeGetAt(2, 2) shouldBe Some(3)
-    Problem011.maybeGetAt(1, 2) shouldBe Some(3)
-    Problem011.maybeGetAt(19, 19)(Problem011.grid) shouldBe Some(48)
+    Problem011Methods.maybeGetAt(0, 0) shouldBe Some(1)
+    Problem011Methods.maybeGetAt(2, 2) shouldBe Some(3)
+    Problem011Methods.maybeGetAt(1, 2) shouldBe Some(3)
+    Problem011Methods.maybeGetAt(19, 19)(Problem011Methods.parseGrid("Problem011Grid")) shouldBe Some(48)
   }
   it should "return None if the index does not exist" in {
-    Problem011.maybeGetAt(20, 20) shouldBe None
-    Problem011.maybeGetAt(1, 20) shouldBe None
-    Problem011.maybeGetAt(20, 1) shouldBe None
-    Problem011.maybeGetAt(20, 1)(Problem011.grid) shouldBe None
+    Problem011Methods.maybeGetAt(20, 20) shouldBe None
+    Problem011Methods.maybeGetAt(1, 20) shouldBe None
+    Problem011Methods.maybeGetAt(20, 1) shouldBe None
+    Problem011Methods.maybeGetAt(20, 1)(Problem011Methods.parseGrid("Problem011Grid")) shouldBe None
   }
 
   val testGrid1 = Seq(
@@ -103,9 +103,9 @@ class ProblemSpec extends UnitSpec{
   )
 
   "Calling Problem011.maxSumOfX" should "return the greatest sum of X in a row in a grid" in {
-    Problem011.maxSumOfX(1)(testGrid1) shouldBe 6
-    Problem011.maxSumOfX(2)(testGrid1) shouldBe 11
-    Problem011.maxSumOfX(3)(testGrid1) shouldBe 15
+    Problem011Methods.maxSumOfX(1)(testGrid1) shouldBe 6
+    Problem011Methods.maxSumOfX(2)(testGrid1) shouldBe 11
+    Problem011Methods.maxSumOfX(3)(testGrid1) shouldBe 15
   }
 
   val testGrid2 = Seq(
@@ -114,9 +114,9 @@ class ProblemSpec extends UnitSpec{
     Seq(6, 1, 1)
   )
   it should "return the greatest sum of X in a column in a grid" in {
-    Problem011.maxSumOfX(1)(testGrid2) shouldBe 6
-    Problem011.maxSumOfX(2)(testGrid2) shouldBe 11
-    Problem011.maxSumOfX(3)(testGrid2) shouldBe 15
+    Problem011Methods.maxSumOfX(1)(testGrid2) shouldBe 6
+    Problem011Methods.maxSumOfX(2)(testGrid2) shouldBe 11
+    Problem011Methods.maxSumOfX(3)(testGrid2) shouldBe 15
   }
 
   val testGrid3 = Seq(
@@ -125,9 +125,9 @@ class ProblemSpec extends UnitSpec{
     Seq(4, 1, 1)
   )
   it should "return the greatest sum of X in a right diagonal in a grid" in {
-    Problem011.maxSumOfX(1)(testGrid3) shouldBe 6
-    Problem011.maxSumOfX(2)(testGrid3) shouldBe 11
-    Problem011.maxSumOfX(3)(testGrid3) shouldBe 15
+    Problem011Methods.maxSumOfX(1)(testGrid3) shouldBe 6
+    Problem011Methods.maxSumOfX(2)(testGrid3) shouldBe 11
+    Problem011Methods.maxSumOfX(3)(testGrid3) shouldBe 15
   }
 
   val testGrid4 = Seq(
@@ -136,9 +136,9 @@ class ProblemSpec extends UnitSpec{
     Seq(1, 1, 6)
   )
   it should "return the greatest sum of X in a left diagonal in a grid" in {
-    Problem011.maxSumOfX(1)(testGrid4) shouldBe 6
-    Problem011.maxSumOfX(2)(testGrid4) shouldBe 11
-    Problem011.maxSumOfX(3)(testGrid4) shouldBe 15
+    Problem011Methods.maxSumOfX(1)(testGrid4) shouldBe 6
+    Problem011Methods.maxSumOfX(2)(testGrid4) shouldBe 11
+    Problem011Methods.maxSumOfX(3)(testGrid4) shouldBe 15
   }
 
   val finalTest = Seq(
@@ -148,8 +148,13 @@ class ProblemSpec extends UnitSpec{
     Seq(9, 1, 1, 1)
   )
   it should "return the greatest sum of X in a grid" in {
-    Problem011.maxSumOfX(1)(finalTest) shouldBe 9
-    Problem011.maxSumOfX(2)(finalTest) shouldBe 12
-    Problem011.maxSumOfX(3)(finalTest) shouldBe 15
+    Problem011Methods.maxSumOfX(1)(finalTest) shouldBe 9
+    Problem011Methods.maxSumOfX(2)(finalTest) shouldBe 12
+    Problem011Methods.maxSumOfX(3)(finalTest) shouldBe 15
+  }
+  "Calling Problem011.maxProductOfX" should "return the greatest product of X in a grid" in {
+    Problem011Methods.maxProductOfX(1)(finalTest) shouldBe 9
+    Problem011Methods.maxProductOfX(2)(finalTest) shouldBe 36
+    Problem011Methods.maxProductOfX(3)(finalTest) shouldBe 120
   }
 }
