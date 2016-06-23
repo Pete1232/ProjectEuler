@@ -83,17 +83,17 @@ class ProblemSpec extends UnitSpec{
     Problem011.parseGrid("Problem011Grid").apply(5).apply(2) shouldBe 32
     Problem011.parseGrid("Problem011Grid").apply(19).apply(19) shouldBe 48
   }
-  "Calling Problem11.getAt" should "return the element at the requested index if it exists" in {
-    Problem011.getAt(0, 0) shouldBe Some(1)
-    Problem011.getAt(2, 2) shouldBe Some(3)
-    Problem011.getAt(1, 2) shouldBe Some(3)
-    Problem011.getAt(19, 19)(Problem011.grid) shouldBe Some(48)
+  "Calling Problem11.maybeGetAt" should "return the element at the requested index if it exists" in {
+    Problem011.maybeGetAt(0, 0) shouldBe Some(1)
+    Problem011.maybeGetAt(2, 2) shouldBe Some(3)
+    Problem011.maybeGetAt(1, 2) shouldBe Some(3)
+    Problem011.maybeGetAt(19, 19)(Problem011.grid) shouldBe Some(48)
   }
   it should "return None if the index does not exist" in {
-    Problem011.getAt(20, 20) shouldBe None
-    Problem011.getAt(1, 20) shouldBe None
-    Problem011.getAt(20, 1) shouldBe None
-    Problem011.getAt(20, 1)(Problem011.grid) shouldBe None
+    Problem011.maybeGetAt(20, 20) shouldBe None
+    Problem011.maybeGetAt(1, 20) shouldBe None
+    Problem011.maybeGetAt(20, 1) shouldBe None
+    Problem011.maybeGetAt(20, 1)(Problem011.grid) shouldBe None
   }
   "Calling Problem011.maxInColumn" should "return the greatest sum of 4 numbers in the column" in {
     Problem011.maxInColumn(0) shouldBe 11
