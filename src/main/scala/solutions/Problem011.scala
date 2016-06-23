@@ -16,47 +16,30 @@ object Problem011 {
       .flatMap{ _.lift(y) }
 
 
-  def maxSumInColumn(column: Int, sumSize: Int)(implicit grid: Seq[Seq[Int]]): Int = {
-    require(sumSize < grid.length)
-    def getNextX(startRow: Int, X: Int) =
+  def maxSumOfX(X: Int)(implicit grid: Seq[Seq[Int]]): Int = {
+    def getNextXInRow(row: Int, startCol: Int, X: Int) =
+      for (col <- startCol until startCol + X) yield
+        maybeGetAt(row, col)
+
+    def getNextXInCol(startRow: Int, col: Int, X: Int) =
       for (row <- startRow until startRow + X) yield
-        maybeGetAt(row, column)
+        maybeGetAt(row, col)
 
-    (for ( rowNumber <- grid.indices ) yield
-      getNextX(rowNumber, sumSize)
-        .flatten.sum
-    ).max
-  }
+    def getNextXInDiagRight(startRow: Int, startCol: Int, X: Int) =
+      for (mod <- 0 until X) yield
+        maybeGetAt(startRow + mod, startCol - mod)
 
-  def maxSumInRow(row: Int, sumSize: Int)(implicit grid: Seq[Seq[Int]]): Int = {
-    require(sumSize < grid.apply(0).length)
-    def getNextX(startCol: Int, X: Int) =
-      for (column <- startCol until startCol + X) yield
-        maybeGetAt(row, column)
+    def getNextXInDiagLeft(startRow: Int, startCol: Int, X: Int) =
+      for (mod <- 0 until X) yield
+        maybeGetAt(startRow + mod, startCol + mod)
 
-    (for ( colNumber <- grid.apply(0).indices ) yield
-      getNextX(colNumber, sumSize)
-        .flatten.sum
-      ).max
-  }
-
-  def maxInDiagRight(row: Int)(implicit grid: Seq[Seq[Int]]): Int = {
-    def sumNext4(startCol: Int): Int = {
-      grid.apply(row).apply(startCol)
-        . + (grid.apply(row - 1).apply(startCol + 1))
-        . + (grid.apply(row - 2).apply(startCol + 2))
-        . + (grid.apply(row - 3).apply(startCol + 3))
-    }
-    (for (colNumber <- Range(0, grid.apply(row).length - 3)) yield sumNext4(colNumber)).max
-  }
-
-  def maxInDiagLeft(row: Int)(implicit grid: Seq[Seq[Int]]): Int = {
-    def sumNext4(startCol: Int): Int = {
-      grid.apply(row).apply(startCol)
-        . + (grid.apply(row - 1).apply(startCol - 1))
-        . + (grid.apply(row - 2).apply(startCol - 2))
-        . + (grid.apply(row - 3).apply(startCol - 3))
-    }
-    (for (colNumber <- Range(3, grid.apply(row).length).reverse) yield sumNext4(colNumber)).max
+    (for ( rowNumber <- grid.indices; colNumber <- grid.apply(0).indices ) yield {
+        Seq(
+          getNextXInRow(rowNumber, colNumber, X).flatten.sum,
+          getNextXInCol(rowNumber, colNumber, X).flatten.sum,
+          getNextXInDiagRight(rowNumber, colNumber, X).flatten.sum,
+          getNextXInDiagLeft(rowNumber, colNumber, X).flatten.sum
+        ).max
+    }) max
   }
 }

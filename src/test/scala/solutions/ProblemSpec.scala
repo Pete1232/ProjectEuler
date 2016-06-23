@@ -95,48 +95,61 @@ class ProblemSpec extends UnitSpec{
     Problem011.maybeGetAt(20, 1) shouldBe None
     Problem011.maybeGetAt(20, 1)(Problem011.grid) shouldBe None
   }
-  "Calling Problem011.maxInColumn" should "return the greatest sum of 4 numbers in the column when size is 4" in {
-    Problem011.maxSumInColumn(0, 4) shouldBe 11
-    Problem011.maxSumInColumn(4, 4) shouldBe 23
+
+  val testGrid1 = Seq(
+    Seq(4, 5, 6),
+    Seq(1, 1, 1),
+    Seq(1, 1, 1)
+  )
+
+  "Calling Problem011.maxSumOfX" should "return the greatest sum of X in a row in a grid" in {
+    Problem011.maxSumOfX(1)(testGrid1) shouldBe 6
+    Problem011.maxSumOfX(2)(testGrid1) shouldBe 11
+    Problem011.maxSumOfX(3)(testGrid1) shouldBe 15
   }
-  it should "return the greatest sum of 5 numbers in the column when size is 5" in {
-    Problem011.maxSumInColumn(0, 5) shouldBe 12
-    Problem011.maxSumInColumn(4, 5) shouldBe 28
+
+  val testGrid2 = Seq(
+    Seq(4, 1, 1),
+    Seq(5, 1, 1),
+    Seq(6, 1, 1)
+  )
+  it should "return the greatest sum of X in a column in a grid" in {
+    Problem011.maxSumOfX(1)(testGrid2) shouldBe 6
+    Problem011.maxSumOfX(2)(testGrid2) shouldBe 11
+    Problem011.maxSumOfX(3)(testGrid2) shouldBe 15
   }
-  it should "return the greatest number in the column when size is 1" in {
-    Problem011.maxSumInColumn(0, 1) shouldBe 5
-    Problem011.maxSumInColumn(4, 1) shouldBe 7
+
+  val testGrid3 = Seq(
+    Seq(1, 1, 6),
+    Seq(1, 5, 1),
+    Seq(4, 1, 1)
+  )
+  it should "return the greatest sum of X in a right diagonal in a grid" in {
+    Problem011.maxSumOfX(1)(testGrid3) shouldBe 6
+    Problem011.maxSumOfX(2)(testGrid3) shouldBe 11
+    Problem011.maxSumOfX(3)(testGrid3) shouldBe 15
   }
-  it should "return throw an exception if the size is greater than grid.length" in {
-    intercept[IllegalArgumentException]{
-      Problem011.maxSumInColumn(0, 11)
-    }
+
+  val testGrid4 = Seq(
+    Seq(4, 1, 1),
+    Seq(1, 5, 1),
+    Seq(1, 1, 6)
+  )
+  it should "return the greatest sum of X in a left diagonal in a grid" in {
+    Problem011.maxSumOfX(1)(testGrid4) shouldBe 6
+    Problem011.maxSumOfX(2)(testGrid4) shouldBe 11
+    Problem011.maxSumOfX(3)(testGrid4) shouldBe 15
   }
-  "Calling Problem011.maxInRow" should "return the greatest sum of 4 numbers in the row" in {
-    Problem011.maxSumInRow(0, 4) shouldBe 30
-    Problem011.maxSumInRow(6, 4) shouldBe 18
-  }
-  it should "return the greatest sum of 5 numbers in the row when size is 5" in {
-    Problem011.maxSumInRow(0, 5) shouldBe 35
-    Problem011.maxSumInRow(6, 5) shouldBe 23
-  }
-  it should "return the greatest number in the row when size is 1" in {
-    Problem011.maxSumInRow(0, 1) shouldBe 9
-    Problem011.maxSumInRow(6, 1) shouldBe 9
-  }
-  it should "return throw an exception if the size is greater than grid.apply(0).length" in {
-    intercept[IllegalArgumentException]{
-      Problem011.maxSumInRow(0, 11)
-    }
-  }
-  "Calling Problem011.maxInDiagRight" should "return the greatest sum of 4 numbers on a diagonal right from the given column" in {
-    Problem011.maxInDiagRight(6) shouldBe 29
-    Problem011.maxInDiagRight(7) shouldBe 33
-    Problem011.maxInDiagRight(8) shouldBe 29
-  }
-  "Calling Problem011.maxInDiagLeft" should "return the greatest sum of 4 numbers on a diagonal left from the given column" in {
-    Problem011.maxInDiagLeft(6) shouldBe 25
-    Problem011.maxInDiagLeft(7) shouldBe 29
-    Problem011.maxInDiagLeft(8) shouldBe 33
+
+  val finalTest = Seq(
+    Seq(4, 1, 6, 1),
+    Seq(1, 5, 1, 1),
+    Seq(1, 1, 6, 6),
+    Seq(9, 1, 1, 1)
+  )
+  it should "return the greatest sum of X in a grid" in {
+    Problem011.maxSumOfX(1)(finalTest) shouldBe 9
+    Problem011.maxSumOfX(2)(finalTest) shouldBe 12
+    Problem011.maxSumOfX(3)(finalTest) shouldBe 15
   }
 }
