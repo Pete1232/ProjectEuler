@@ -11,17 +11,11 @@ object Problem011 {
     result
   }
 
-  def getAt(x: Int, y: Int)(implicit grid: Seq[Seq[Int]]) = {
-    val row: Option[Seq[Int]] = grid.isDefinedAt(x) match {
-      case true => Some(grid.apply(x))
-
-      case _ => None
-    }
-    row.map {row =>
-      row.isDefinedAt(y) match {
-        case true => Some(row.apply(y))
-        case _ => None
+  def getAt(x: Int, y: Int)(implicit grid: Seq[Seq[Int]]): Option[Int] = {
+    grid
+      .lift(x)
+      .flatMap{
+        row => row.lift(y)
       }
-    }.flatten
   }
 }
