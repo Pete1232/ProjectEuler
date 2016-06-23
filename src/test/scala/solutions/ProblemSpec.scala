@@ -66,7 +66,17 @@ class ProblemSpec extends UnitSpec{
     Problem010.primeAdder(end = end) shouldBe 17
   }
 
-  implicit val testGrid: Seq[Seq[Int]] = Seq(Seq(1, 2, 3), Seq(4, 5, 6), Seq(7, 8, 9))
+  implicit val testGrid: Seq[Seq[Int]] = Seq(
+    Seq(1, 2, 3, 4, 5, 6, 7, 8, 9),
+    Seq(1, 2, 3, 4, 5, 6, 7, 8, 9),
+    Seq(1, 2, 3, 4, 5, 6, 7, 8, 9),
+    Seq(5, 2, 3, 4, 5, 6, 7, 8, 9),
+    Seq(1, 2, 3, 4, 5, 6, 7, 8, 9),
+    Seq(2, 3, 4, 5, 6, 7, 8, 9, 1),
+    Seq(3, 4, 5, 6, 7, 8, 9, 1, 2),
+    Seq(1, 2, 3, 4, 5, 6, 7, 8, 9),
+    Seq(1, 2, 3, 4, 5, 6, 7, 8, 9)
+  )
 
   "Calling Problem11.parseGrid" should "parse the given csv into a sequence of sequences" in {
     Problem011.parseGrid("Problem011Grid").apply(0).apply(0) shouldBe 8
@@ -75,8 +85,8 @@ class ProblemSpec extends UnitSpec{
   }
   "Calling Problem11.getAt" should "return the element at the requested index if it exists" in {
     Problem011.getAt(0, 0) shouldBe Some(1)
-    Problem011.getAt(2, 2) shouldBe Some(9)
-    Problem011.getAt(1, 2) shouldBe Some(6)
+    Problem011.getAt(2, 2) shouldBe Some(3)
+    Problem011.getAt(1, 2) shouldBe Some(3)
     Problem011.getAt(19, 19)(Problem011.grid) shouldBe Some(48)
   }
   it should "return None if the index does not exist" in {
@@ -84,5 +94,9 @@ class ProblemSpec extends UnitSpec{
     Problem011.getAt(1, 20) shouldBe None
     Problem011.getAt(20, 1) shouldBe None
     Problem011.getAt(20, 1)(Problem011.grid) shouldBe None
+  }
+  "Calling Problem011.maxInColumn" should "return the greatest sum of 4 numbers in the column" in {
+    Problem011.maxInColumn(0) shouldBe 11
+    Problem011.maxInColumn(4) shouldBe 23
   }
 }

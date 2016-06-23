@@ -18,4 +18,14 @@ object Problem011 {
         row => row.lift(y)
       }
   }
+
+  def maxInColumn(column: Int)(implicit grid: Seq[Seq[Int]]): Int = {
+    def sumNext4(startRow: Int): Int = {
+      grid.apply(startRow).apply(column)
+        . + (grid.apply(startRow + 1).apply(column))
+        . + (grid.apply(startRow + 2).apply(column))
+        . + (grid.apply(startRow + 3).apply(column))
+    }
+    (for (rowNumber <- Range(0, grid.length - 3)) yield sumNext4(rowNumber)).max
+  }
 }
