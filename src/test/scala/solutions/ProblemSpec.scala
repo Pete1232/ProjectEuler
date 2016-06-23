@@ -73,7 +73,7 @@ class ProblemSpec extends UnitSpec{
     Seq(5, 2, 3, 4, 5, 6, 7, 8, 9),
     Seq(1, 2, 3, 4, 5, 6, 7, 8, 9),
     Seq(2, 3, 4, 5, 6, 7, 8, 9, 1),
-    Seq(3, 4, 5, 6, 7, 8, 9, 1, 2),
+    Seq(3, 4, 5, 1, 7, 1, 9, 1, 2),
     Seq(1, 2, 3, 4, 5, 6, 7, 8, 9),
     Seq(1, 2, 3, 4, 5, 6, 7, 8, 9)
   )
@@ -98,5 +98,9 @@ class ProblemSpec extends UnitSpec{
   "Calling Problem011.maxInColumn" should "return the greatest sum of 4 numbers in the column" in {
     Problem011.maxInColumn(0) shouldBe 11
     Problem011.maxInColumn(4) shouldBe 23
+  }
+  "Calling Problem011.maxInRow" should "return the greatest sum of 4 numbers in the row" in {
+    Problem011.maxInRow(0) shouldBe 30
+    Problem011.maxInRow(6) shouldBe 18
   }
 }

@@ -28,4 +28,14 @@ object Problem011 {
     }
     (for (rowNumber <- Range(0, grid.length - 3)) yield sumNext4(rowNumber)).max
   }
+
+  def maxInRow(row: Int)(implicit grid: Seq[Seq[Int]]): Int = {
+    def sumNext4(startCol: Int): Int = {
+      grid.apply(row).apply(startCol)
+        . + (grid.apply(row).apply(startCol + 1))
+        . + (grid.apply(row).apply(startCol + 2))
+        . + (grid.apply(row).apply(startCol + 3))
+    }
+    (for (colNumber <- Range(0, grid.apply(row).length - 3)) yield sumNext4(colNumber)).max
+  }
 }
