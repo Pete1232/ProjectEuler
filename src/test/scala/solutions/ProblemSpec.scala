@@ -107,14 +107,27 @@ class ProblemSpec extends UnitSpec{
     Problem011.maxSumInColumn(0, 1) shouldBe 5
     Problem011.maxSumInColumn(4, 1) shouldBe 7
   }
-  it should "return throw ane exception if the size is greater than grid.length" in {
+  it should "return throw an exception if the size is greater than grid.length" in {
     intercept[IllegalArgumentException]{
-      Problem011.maxSumInColumn(0, 11) shouldBe 0
+      Problem011.maxSumInColumn(0, 11)
     }
   }
   "Calling Problem011.maxInRow" should "return the greatest sum of 4 numbers in the row" in {
-    Problem011.maxInRow(0) shouldBe 30
-    Problem011.maxInRow(6) shouldBe 18
+    Problem011.maxSumInRow(0, 4) shouldBe 30
+    Problem011.maxSumInRow(6, 4) shouldBe 18
+  }
+  it should "return the greatest sum of 5 numbers in the row when size is 5" in {
+    Problem011.maxSumInRow(0, 5) shouldBe 35
+    Problem011.maxSumInRow(6, 5) shouldBe 23
+  }
+  it should "return the greatest number in the row when size is 1" in {
+    Problem011.maxSumInRow(0, 1) shouldBe 9
+    Problem011.maxSumInRow(6, 1) shouldBe 9
+  }
+  it should "return throw an exception if the size is greater than grid.apply(0).length" in {
+    intercept[IllegalArgumentException]{
+      Problem011.maxSumInRow(0, 11)
+    }
   }
   "Calling Problem011.maxInDiagRight" should "return the greatest sum of 4 numbers on a diagonal right from the given column" in {
     Problem011.maxInDiagRight(6) shouldBe 29
