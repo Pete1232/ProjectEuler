@@ -65,9 +65,24 @@ class ProblemSpec extends UnitSpec{
     val end = 10
     Problem010.primeAdder(end = end) shouldBe 17
   }
+
+  implicit val testGrid: Seq[Seq[Int]] = Seq(Seq(1, 2, 3), Seq(4, 5, 6), Seq(7, 8, 9))
+
   "Calling Problem11.parseGrid" should "parse the given csv into a sequence of sequences" in {
     Problem011.parseGrid("Problem011Grid").apply(0).apply(0) shouldBe 8
     Problem011.parseGrid("Problem011Grid").apply(5).apply(2) shouldBe 32
     Problem011.parseGrid("Problem011Grid").apply(19).apply(19) shouldBe 48
+  }
+  "Calling Problem11.getAt" should "return the element at the requested index if it exists" in {
+    Problem011.getAt(0, 0) shouldBe Some(1)
+    Problem011.getAt(2, 2) shouldBe Some(9)
+    Problem011.getAt(1, 2) shouldBe Some(6)
+    Problem011.getAt(19, 19)(Problem011.grid) shouldBe Some(48)
+  }
+  it should "return None if the index does not exist" in {
+    Problem011.getAt(20, 20) shouldBe None
+    Problem011.getAt(1, 20) shouldBe None
+    Problem011.getAt(20, 1) shouldBe None
+    Problem011.getAt(20, 1)(Problem011.grid) shouldBe None
   }
 }
