@@ -103,4 +103,14 @@ class ProblemSpec extends UnitSpec{
     Problem011.maxInRow(0) shouldBe 30
     Problem011.maxInRow(6) shouldBe 18
   }
+  "Calling Problem011.maxInDiagRight" should "return the greatest sum of 4 numbers on a diagonal right from the given column" in {
+    Problem011.maxInDiagRight(6) shouldBe 29
+    Problem011.maxInDiagRight(7) shouldBe 33
+    Problem011.maxInDiagRight(8) shouldBe 29
+  }
+  "Calling Problem011.maxInDiagLeft" should "return the greatest sum of 4 numbers on a diagonal left from the given column" in {
+    Problem011.maxInDiagLeft(6) shouldBe 25
+    Problem011.maxInDiagLeft(7) shouldBe 29
+    Problem011.maxInDiagLeft(8) shouldBe 33
+  }
 }

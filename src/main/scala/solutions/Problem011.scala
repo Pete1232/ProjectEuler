@@ -38,4 +38,24 @@ object Problem011 {
     }
     (for (colNumber <- Range(0, grid.apply(row).length - 3)) yield sumNext4(colNumber)).max
   }
+
+  def maxInDiagRight(row: Int)(implicit grid: Seq[Seq[Int]]): Int = {
+    def sumNext4(startCol: Int): Int = {
+      grid.apply(row).apply(startCol)
+        . + (grid.apply(row - 1).apply(startCol + 1))
+        . + (grid.apply(row - 2).apply(startCol + 2))
+        . + (grid.apply(row - 3).apply(startCol + 3))
+    }
+    (for (colNumber <- Range(0, grid.apply(row).length - 3)) yield sumNext4(colNumber)).max
+  }
+
+  def maxInDiagLeft(row: Int)(implicit grid: Seq[Seq[Int]]): Int = {
+    def sumNext4(startCol: Int): Int = {
+      grid.apply(row).apply(startCol)
+        . + (grid.apply(row - 1).apply(startCol - 1))
+        . + (grid.apply(row - 2).apply(startCol - 2))
+        . + (grid.apply(row - 3).apply(startCol - 3))
+    }
+    (for (colNumber <- Range(3, grid.apply(row).length).reverse) yield sumNext4(colNumber)).max
+  }
 }
