@@ -95,9 +95,22 @@ class ProblemSpec extends UnitSpec{
     Problem011.maybeGetAt(20, 1) shouldBe None
     Problem011.maybeGetAt(20, 1)(Problem011.grid) shouldBe None
   }
-  "Calling Problem011.maxInColumn" should "return the greatest sum of 4 numbers in the column" in {
-    Problem011.maxInColumn(0) shouldBe 11
-    Problem011.maxInColumn(4) shouldBe 23
+  "Calling Problem011.maxInColumn" should "return the greatest sum of 4 numbers in the column when size is 4" in {
+    Problem011.maxSumInColumn(0, 4) shouldBe 11
+    Problem011.maxSumInColumn(4, 4) shouldBe 23
+  }
+  it should "return the greatest sum of 5 numbers in the column when size is 5" in {
+    Problem011.maxSumInColumn(0, 5) shouldBe 12
+    Problem011.maxSumInColumn(4, 5) shouldBe 28
+  }
+  it should "return the greatest number in the column when size is 1" in {
+    Problem011.maxSumInColumn(0, 1) shouldBe 5
+    Problem011.maxSumInColumn(4, 1) shouldBe 7
+  }
+  it should "return throw ane exception if the size is greater than grid.length" in {
+    intercept[IllegalArgumentException]{
+      Problem011.maxSumInColumn(0, 11) shouldBe 0
+    }
   }
   "Calling Problem011.maxInRow" should "return the greatest sum of 4 numbers in the row" in {
     Problem011.maxInRow(0) shouldBe 30

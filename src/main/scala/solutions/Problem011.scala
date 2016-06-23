@@ -16,20 +16,16 @@ object Problem011 {
       .flatMap{ _.lift(y) }
 
 
-  def maxInColumn(column: Int)(implicit grid: Seq[Seq[Int]]): Int = {
+  def maxSumInColumn(column: Int, sumSize: Int)(implicit grid: Seq[Seq[Int]]): Int = {
+    require(sumSize < grid.length)
+    def getNextX(startRow: Int, X: Int): Seq[Option[Int]] =
+      for (row <- startRow + X until startRow by -1) yield
+        maybeGetAt(row, column)
 
-    def getNext4(startRow: Int): Seq[Option[Int]] = {
-      for (row <- startRow + 4 until startRow by -1) yield maybeGetAt(row, column)
-    }
-
-    def sumNext4(next4: Seq[Option[Int]]) = {
-      next4.forall(_.isDefined) match {
-        case true => next4.flatten.sum
-        case _ => 0
-      }
-    }
-
-    (for ( rowNumber <- 0 until grid.length ) yield sumNext4(getNext4(rowNumber))) max
+    (for ( rowNumber <- grid.indices ) yield
+      getNextX(rowNumber, sumSize)
+        .flatten.sum
+    ).max
   }
 
   def maxInRow(row: Int)(implicit grid: Seq[Seq[Int]]): Int = {
