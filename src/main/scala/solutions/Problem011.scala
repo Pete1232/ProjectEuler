@@ -15,35 +15,15 @@ object Problem011Methods{
       .flatMap{ _.lift(y) }
 
   def maxSumOfX(X: Int)(implicit grid: Seq[Seq[Int]]): Int = {
-    require(X <= grid.length && X <= grid.apply(0).length)
-    def getNextXInRow(startRow: Int, startCol: Int, X: Int) =
-      for (mod <- 0 until X) yield
-        maybeGetAt(startRow, startCol + mod)
-
-    def getNextXInCol(startRow: Int, startCol: Int, X: Int) =
-      for (mod <- 0 until X) yield
-        maybeGetAt(startRow + mod, startCol)
-
-    def getNextXInDiagRight(startRow: Int, startCol: Int, X: Int) =
-      for (mod <- 0 until X) yield
-        maybeGetAt(startRow + mod, startCol - mod)
-
-    def getNextXInDiagLeft(startRow: Int, startCol: Int, X: Int) =
-      for (mod <- 0 until X) yield
-        maybeGetAt(startRow + mod, startCol + mod)
-
-    (for ( rowNumber <- grid.indices; colNumber <- grid.apply(0).indices ) yield {
-        Seq(
-          getNextXInRow(rowNumber, colNumber, X).flatten.sum,
-          getNextXInCol(rowNumber, colNumber, X).flatten.sum,
-          getNextXInDiagRight(rowNumber, colNumber, X).flatten.sum,
-          getNextXInDiagLeft(rowNumber, colNumber, X).flatten.sum
-        ).max
-    }) max
+    maxOpX(X, (x: Int, y: Int) => x + y, 0)
   }
 
   def maxProductOfX(X: Int)(implicit grid: Seq[Seq[Int]]): Int = {
-    require(X <= grid.length && X <= grid.apply(0).length)
+    maxOpX(X, (x: Int, y: Int) => x * y, 1)
+  }
+
+  private def maxOpX(X: Int, op: (Int, Int) => Int, start: Int)(implicit grid: Seq[Seq[Int]]): Int = {
+    require(X <= grid.length && X <= grid.head.length)
     def getNextXInRow(startRow: Int, startCol: Int, X: Int) =
       for (mod <- 0 until X) yield
         maybeGetAt(startRow, startCol + mod)
@@ -60,12 +40,12 @@ object Problem011Methods{
       for (mod <- 0 until X) yield
         maybeGetAt(startRow + mod, startCol + mod)
 
-    (for ( rowNumber <- grid.indices; colNumber <- grid.apply(0).indices ) yield {
+    (for ( rowNumber <- grid.indices; colNumber <- grid.head.indices ) yield {
       Seq(
-        getNextXInRow(rowNumber, colNumber, X).flatten.product,
-        getNextXInCol(rowNumber, colNumber, X).flatten.product,
-        getNextXInDiagRight(rowNumber, colNumber, X).flatten.product,
-        getNextXInDiagLeft(rowNumber, colNumber, X).flatten.product
+        getNextXInRow(rowNumber, colNumber, X).flatten./:(start)(op),
+        getNextXInCol(rowNumber, colNumber, X).flatten./:(start)(op),
+        getNextXInDiagRight(rowNumber, colNumber, X).flatten./:(start)(op),
+        getNextXInDiagLeft(rowNumber, colNumber, X).flatten./:(start)(op)
       ).max
     }) max
   }
