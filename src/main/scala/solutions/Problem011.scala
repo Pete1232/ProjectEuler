@@ -10,10 +10,6 @@ object Problem011Methods{
     result
   }
 
-  def maybeGetAt(x: Int, y: Int)(implicit grid: Seq[Seq[Int]]): Option[Int] =
-    grid.lift(x)
-      .flatMap{ _.lift(y) }
-
   def maxSumOfX(X: Int)(implicit grid: Seq[Seq[Int]]): Int = {
     maxOpX(X, (x: Int, y: Int) => x + y, 0)
   }
@@ -22,34 +18,38 @@ object Problem011Methods{
     maxOpX(X, (x: Int, y: Int) => x * y, 1)
   }
 
-  private def maxOpX(X: Int, op: (Int, Int) => Int, start: Int)(implicit grid: Seq[Seq[Int]]): Int = {
-    require(X <= grid.length && X <= grid.head.length)
-    def getNextXInRow(startRow: Int, startCol: Int, X: Int) =
-      for (mod <- 0 until X) yield
-        maybeGetAt(startRow, startCol + mod)
+  private def maxOpX(X: Int, binOp: (Int, Int) => Int, unit: Int)(implicit grid: Seq[Seq[Int]]): Int = {
+    // improve efficiency for large values by not checking outside the grid
+    val x = math.min(X, math.max(grid.length, grid.apply(0).length))
 
-    def getNextXInCol(startRow: Int, startCol: Int, X: Int) =
-      for (mod <- 0 until X) yield
-        maybeGetAt(startRow + mod, startCol)
+    // calculate the maximum X in a line for any line starting at (row, col)
+    def calculateMaxTotalAt(row: Int, col: Int) = {
+      (for (mod <- 0 until x) yield
+        Seq(
+          maybeGetValueAt(row, col + mod),        // row
+          maybeGetValueAt(row + mod, col),        // column
+          maybeGetValueAt(row + mod, col - mod),  // right diagonal
+          maybeGetValueAt(row + mod, col + mod)   // left diagonal
+        )
+      ) // returns a collection of (row, column, left diagonal, right diagonal)
+      .reduceLeft((a: Seq[Option[Int]], b: Seq[Option[Int]]) => {
+        a.zip(b)  // put the lines together a bit at a time
+          .map(pair =>
+            Some(binOp(pair._1.getOrElse(unit), pair._2.getOrElse(unit)))   // add up the values in the line
+          )
+      }).flatten.max  // take the maximum of the four lines
+    }
 
-    def getNextXInDiagRight(startRow: Int, startCol: Int, X: Int) =
-      for (mod <- 0 until X) yield
-        maybeGetAt(startRow + mod, startCol - mod)
+    def maybeGetValueAt(x: Int, y: Int)(implicit grid: Seq[Seq[Int]]): Option[Int] =
+      grid.lift(x)
+        .flatMap{ _.lift(y) }
 
-    def getNextXInDiagLeft(startRow: Int, startCol: Int, X: Int) =
-      for (mod <- 0 until X) yield
-        maybeGetAt(startRow + mod, startCol + mod)
-
-    (for ( rowNumber <- grid.indices; colNumber <- grid.head.indices ) yield {
-      Seq(
-        getNextXInRow(rowNumber, colNumber, X).flatten./:(start)(op),
-        getNextXInCol(rowNumber, colNumber, X).flatten./:(start)(op),
-        getNextXInDiagRight(rowNumber, colNumber, X).flatten./:(start)(op),
-        getNextXInDiagLeft(rowNumber, colNumber, X).flatten./:(start)(op)
-      ).max
-    }) max
+    // for each point in the grid...
+    (for (rowNumber <- grid.indices; colNumber <- grid.head.indices) yield
+      // ... get the maximum X in a line ...
+      calculateMaxTotalAt(rowNumber, colNumber)
+    ).max // ... and take the maximum from all the points
   }
-
 }
 
 object Problem011 extends App{

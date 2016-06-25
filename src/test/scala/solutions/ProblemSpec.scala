@@ -121,6 +121,11 @@ class ProblemSpec extends UnitSpec{
     Problem011Methods.maxSumOfX(1)(finalTest) shouldBe 9
     Problem011Methods.maxSumOfX(2)(finalTest) shouldBe 12
     Problem011Methods.maxSumOfX(3)(finalTest) shouldBe 15
+    Problem011Methods.maxSumOfX(4)(finalTest) shouldBe 16
+  }
+  it should "return the maximum possible sum if X is larger than the grid" in {
+    Problem011Methods.maxSumOfX(5)(finalTest) shouldBe 16
+    Problem011Methods.maxSumOfX(11)(finalTest) shouldBe 16
   }
   "Calling Problem011.maxProductOfX" should "return the greatest product of X in a grid" in {
     Problem011Methods.maxProductOfX(1)(finalTest) shouldBe 9
