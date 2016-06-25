@@ -1,15 +1,8 @@
 package solutions
 
-object Problem011Methods{
-  def parseGrid(gridName: String): Seq[Seq[Int]] = {
-    val source = io.Source.fromInputStream(getClass.getResourceAsStream(s"/$gridName.csv"))
-    val result = source.getLines().toSeq
-      .map { _.split(",")
-        .map { _.trim.toInt }.toSeq
-      }
-    result
-  }
+import scala.collection.mutable
 
+object Problem011Methods{
   def maxSumOfX(X: Int)(implicit grid: Seq[Seq[Int]]): Int = {
     maxOpX(X, (x: Int, y: Int) => x + y, 0)
   }
@@ -52,7 +45,24 @@ object Problem011Methods{
   }
 }
 
+class Problem011(source: String) {
+  // assigning to a variable buffer so the source can be closed safely
+  var grid: mutable.ArrayBuffer[Seq[Int]] = new mutable.ArrayBuffer[Seq[Int]]()
+
+  //initialise grid
+  parseGrid(source)
+
+  def parseGrid(gridName: String): Unit = {
+    val source = io.Source.fromInputStream(getClass.getResourceAsStream(s"/$gridName.csv"))
+    val result = source.getLines().toSeq
+      .map { _.split(",")
+        .map { _.trim.toInt }.toSeq
+      }
+    result.copyToBuffer(grid)
+    source.close()
+  }
+}
+
 object Problem011 extends App{
-  val grid: Seq[Seq[Int]] = Problem011Methods.parseGrid("Problem011Grid")
-  println(Problem011Methods.maxProductOfX(4)(grid))
+  println(Problem011Methods.maxProductOfX(4)(new Problem011("Problem011Grid").grid))
 }
