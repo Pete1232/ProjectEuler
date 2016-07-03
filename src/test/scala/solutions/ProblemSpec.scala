@@ -132,4 +132,16 @@ class ProblemSpec extends UnitSpec{
     Problem011Methods.maxProductOfX(2)(finalTest) shouldBe 36
     Problem011Methods.maxProductOfX(3)(finalTest) shouldBe 120
   }
+
+  "Calling Problem012.nthTriangle" should "return the nth triangle number" in {
+    Problem012.nthTriangle(7) shouldBe 28
+  }
+
+  "Calling Problem012.numberOfDivisors" should "return the total number of unique divisors of n" in {
+    Problem012.numberOfDivisors(28) shouldBe 6
+  }
+
+  "Calling Problem012.hasKDivisors" should "return the first triangle number with k divisors" in {
+    Problem012.hasKDivisors(k = 6) shouldBe 28
+  }
 }
