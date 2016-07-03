@@ -141,7 +141,7 @@ class ProblemSpec extends UnitSpec{
     Problem012.numberOfDivisors(28) shouldBe 6
   }
 
-  "Calling Problem012.hasKDivisors" should "return the first triangle number with k divisors" in {
-    Problem012.hasKDivisors(k = 6) shouldBe 28
+  "Calling Problem012.hasKDivisors" should "return the first triangle number with > k divisors" in {
+    Problem012.hasKDivisors(k = 5) shouldBe 28
   }
 }

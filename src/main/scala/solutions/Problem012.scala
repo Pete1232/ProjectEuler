@@ -9,7 +9,7 @@ object Problem012 extends App with IntMethods{
   def hasKDivisors(i: Int = 2, k: Int): Int = {
     println(s"Processing the ${i}th triangle number")
     val tri = nthTriangle(i)
-    if(numberOfDivisors(tri) == k) tri else hasKDivisors(i + 1, k)
+    if(numberOfDivisors(tri) > k) tri else hasKDivisors(i + 1, k)
   }
 
   def nthTriangle(n: Int): Int = {
