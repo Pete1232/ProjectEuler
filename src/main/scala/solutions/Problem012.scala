@@ -1,13 +1,13 @@
 package solutions
 
+import java.util.logging.Logger
+
 import integer.IntMethods
 
 object Problem012 extends App with IntMethods{
-
   println(hasKDivisors(k = 500))
 
   def hasKDivisors(i: Int = 2, k: Int): Int = {
-    println(s"Processing the ${i}th triangle number")
     val tri = nthTriangle(i)
     if(numberOfDivisors(tri) > k) tri else hasKDivisors(i + 1, k)
   }

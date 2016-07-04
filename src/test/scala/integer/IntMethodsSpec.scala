@@ -1,6 +1,6 @@
 import base.UnitSpec
 import integer.IntMethods
-class pec extends UnitSpec with IntMethods{
+class IntMethodsSpec extends UnitSpec with IntMethods{
 
   val primeByte: Byte = 7
   val primeShort: Short = 17669
@@ -79,7 +79,7 @@ class pec extends UnitSpec with IntMethods{
     lcm(23, 12) shouldBe 276
     lcm(16, 64) shouldBe 64
   }
-  "Calling lcm on a list of numbers" should "return their lowest commn multiple" in {
+  "Calling lcm on a list of numbers" should "return their lowest common multiple" in {
     lcm(List(2, 2)) shouldBe 2
     lcm(List(4, 5, 6)) shouldBe 60
     lcm(List(16, 64)) shouldBe 64

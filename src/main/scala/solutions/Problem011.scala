@@ -1,8 +1,10 @@
 package solutions
 
+import utils.CSVParser
+
 import scala.collection.mutable
 
-object Problem011Methods{
+object Problem011Methods extends CSVParser{
   def maxSumOfX(X: Int)(implicit grid: Seq[Seq[Int]]): Int = {
     maxOpX(X, (x: Int, y: Int) => x + y, 0)
   }
@@ -45,22 +47,8 @@ object Problem011Methods{
   }
 }
 
-class Problem011(source: String) {
-  // assigning to a variable buffer so the source can be closed safely
-  var grid: mutable.ArrayBuffer[Seq[Int]] = new mutable.ArrayBuffer[Seq[Int]]()
-
-  //initialise grid
-  parseGrid(source)
-
-  def parseGrid(gridName: String): Unit = {
-    val source = io.Source.fromInputStream(getClass.getResourceAsStream(s"/$gridName.csv"))
-    val result = source.getLines().toSeq
-      .map { _.split(",")
-        .map { _.trim.toInt }.toSeq
-      }
-    result.copyToBuffer(grid)
-    source.close()
-  }
+class Problem011(source: String) extends CSVParser{
+  parseIntGrid(source)
 }
 
 object Problem011 extends App{
