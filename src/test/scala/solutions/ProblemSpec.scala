@@ -136,12 +136,14 @@ class ProblemSpec extends UnitSpec{
   "Calling Problem012.nthTriangle" should "return the nth triangle number" in {
     Problem012.nthTriangle(7) shouldBe 28
   }
-
   "Calling Problem012.numberOfDivisors" should "return the total number of unique divisors of n" in {
     Problem012.numberOfDivisors(28) shouldBe 6
   }
-
   "Calling Problem012.hasKDivisors" should "return the first triangle number with > k divisors" in {
     Problem012.hasKDivisors(k = 5) shouldBe 28
+  }
+
+  "Calling Problem013.sumLastDigit" should "return the sum of the final digits of the given numbers" in {
+    Problem013.sumLastDigit(Seq("1234","4321","2341","3214")) shouldBe 10
   }
 }
