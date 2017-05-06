@@ -1,6 +1,8 @@
 package base
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.prop.GeneratorDrivenPropertyChecks
+import org.scalatest.{FlatSpec, Matchers, MustMatchers, WordSpec}
 
-class UnitSpec extends FlatSpec with Matchers{
-}
+trait UnitSpec extends FlatSpec with Matchers
+
+trait UnitTest extends WordSpec with MustMatchers with GeneratorDrivenPropertyChecks
