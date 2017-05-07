@@ -36,11 +36,11 @@ class Problem14Spec extends UnitTest {
   "longest chain" must {
     "give the answer" in {
       val start = longestChain()
-      val length = start.flatMap(s => numbersInCollatzSequence(s)())
-      length.onComplete { len =>
-        println(s"Problem14 answer: Longest chain of length $len from start number $start")
-      }
-      1 mustBe 1
+      val length = start.flatMap(s => numbersInCollatzSequence(s)().map(res => (s, res)))
+
+      length.map { len =>
+        println(s"Problem14 answer: Longest chain of length ${len._2} from start number ${len._1}")
+      }.map(_ mustBe ((): Unit))
     }
   }
 }
