@@ -21,23 +21,23 @@ object Problem014 {
     }
   }
 
-  def longestChain(num: Long = 1, longestChainStart: Long = 1, end: Long = 1000000): Future[Long] = {
+  def longestChain(num: Long = 1, longestChainStart: Long = 1, longestChainLength: Long = 1, end: Long = 1000000): Future[Long] = {
     if (num <= end) {
       if(!doNotCheck(num, end)){
         val lengthOfThisChain = numbersInCollatzSequence(num)()
-        val lengthOFLongestChain = numbersInCollatzSequence(longestChainStart)()
+        val lengthOFLongestChain = Future(longestChainLength)
 
         lengthOfThisChain.flatMap{ current =>
           lengthOFLongestChain.flatMap{ longest =>
             if (current > longest) {
-              longestChain(num + 1, num)
+              longestChain(num + 1, num, current)
             } else {
-              longestChain(num + 1, longestChainStart)
+              longestChain(num + 1, longestChainStart, longestChainLength)
             }
           }
         }
       } else {
-        longestChain(num + 1, longestChainStart)
+        longestChain(num + 1, longestChainStart, longestChainLength)
       }
     } else {
       Future(longestChainStart)
