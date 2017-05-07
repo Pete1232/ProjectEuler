@@ -1,15 +1,18 @@
 package solutions
 
 import scala.annotation.tailrec
+import scala.concurrent.Future
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object Problem014 {
   def nextCollatzNumber(num: Long): Long =
     if (num % 2 == 0) num / 2 else num * 3 + 1
 
   @tailrec
-  def numbersInCollatzSequence(startNum: Long)(num: Long = startNum, count: Long = 1): Long = {
+  def numbersInCollatzSequence(startNum: Long)(num: Long = startNum, count: Long = 1): Future[Long] = {
     if (num == 1) {
-      count
+      Future(count)
     } else {
       numbersInCollatzSequence(startNum)(
         nextCollatzNumber(num),
@@ -18,22 +21,26 @@ object Problem014 {
     }
   }
 
-  @tailrec
-  def longestChain(num: Long = 1, longestChainStart: Long = 1, end: Long = 1000000): Long = {
+  def longestChain(num: Long = 1, longestChainStart: Long = 1, end: Long = 1000000): Future[Long] = {
     if (num <= end) {
       if(!doNotCheck(num, end)){
         val lengthOfThisChain = numbersInCollatzSequence(num)()
         val lengthOFLongestChain = numbersInCollatzSequence(longestChainStart)()
-        if (lengthOfThisChain > lengthOFLongestChain) {
-          longestChain(num + 1, num)
-        } else {
-          longestChain(num + 1, longestChainStart)
+
+        lengthOfThisChain.flatMap{ current =>
+          lengthOFLongestChain.flatMap{ longest =>
+            if (current > longest) {
+              longestChain(num + 1, num)
+            } else {
+              longestChain(num + 1, longestChainStart)
+            }
+          }
         }
       } else {
         longestChain(num + 1, longestChainStart)
       }
     } else {
-      longestChainStart
+      Future(longestChainStart)
     }
   }
 
