@@ -1,7 +1,7 @@
 package solutions
 
 object Problem008 extends App {
-	val bigNumber = "731671765313306249192251196744265747423553491949349698352031277450632623957831801698480186947" +
+  val bigNumber = "731671765313306249192251196744265747423553491949349698352031277450632623957831801698480186947" +
     "88518438586156078911294949545950173795833195285320880551112540698747158523863050715693290963295227443043557" +
     "66896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890" +
     "72962904915604407723907138105158593079608667017242712188399879790879227492190169972088809377665727333001053" +
@@ -28,10 +28,10 @@ object Problem008 extends App {
   def findGreatestProduct(longNumber: String, size: Int, highest: Long = 0, index: Int = 0): Long = {
     val thisNumber = getNumberFromIndex(longNumber, index, size)
     val thisProduct = calculateProduct(thisNumber)
-    if(thisProduct > highest & index < longNumber.size-1) {
+    if (thisProduct > highest & index < longNumber.length - 1) {
       findGreatestProduct(longNumber, size, thisProduct, index + 1)
     }
-    else if(index < longNumber.size-1) {
+    else if (index < longNumber.length - 1) {
       findGreatestProduct(longNumber, size, highest, index + 1)
     }
     else {

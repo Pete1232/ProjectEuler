@@ -12,5 +12,4 @@ object Problem013 extends App with CSVParser{
       }
       .toInt
   }
-
 }

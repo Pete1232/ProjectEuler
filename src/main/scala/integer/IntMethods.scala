@@ -25,17 +25,16 @@ import scala.annotation.tailrec
           None
         }
       }
-      val pair = makeDivisorPair(num.toLong(i), num.toLong(n))
+      val maybePair = makeDivisorPair(num.toLong(i), num.toLong(n))
 
-      pair match {
-        case Some(pair) => {
+      maybePair match {
+        case Some(pair) =>
           if(divisorList.contains(pair.swap)){
             divisorList
           }
           else{
             getDivisorPairs(n, num.plus(i, num.one), divisorList :+ pair.copy(pair._1, pair._2))
           }
-        }
         case None => getDivisorPairs(n, num.plus(i, num.one), divisorList)
       }
     }

@@ -3,9 +3,9 @@ package solutions
 import integer.IntMethods
 
 object Problem009 extends App with IntMethods{
-  getTriple(2)
+  calculateTriple(2)
 
-  def getTriple(n: Int): Unit = {
+  def calculateTriple(n: Int): Unit = {
     // Step 1: Set an even value for r
     // Step 2: Calculate r^2/2. Then st = r^2/2
     // Step 3: Find all PAIRS of factors of r^2/2 <-------probably the hard part
@@ -44,7 +44,7 @@ object Problem009 extends App with IntMethods{
       }
       pairs.headOption match {
         case Some(pair) => whenPairExists(pair)
-        case None => getTriple(n + 1)
+        case None => calculateTriple(n + 1)
       }
     }
     val pairs: List[(Long, Long)] = getDivisorPairs(st)

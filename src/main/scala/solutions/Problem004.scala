@@ -11,7 +11,7 @@ object Problem004 extends App{
     def asArray(i: Int, j: Int): Array[Char] = {
       (i * j + "").toCharArray
     }
-    
+
     if(i == lowerLimit){
       if(j == lowerLimit){
         list.max
@@ -36,7 +36,7 @@ object Problem004 extends App{
   }
 
   def isPalindrome(numberArray: Array[Char]): Boolean = {
-    if(numberArray.size <= 1){
+    if(numberArray.length <= 1){
       true
     }
     else if(numberArray.head == numberArray.last){

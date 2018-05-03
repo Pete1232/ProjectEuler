@@ -3,8 +3,6 @@ package solutions
 import base.{Generators, UnitTest}
 import Problem014._
 
-import scala.concurrent.ExecutionContext.Implicits.global
-
 class Problem14Spec extends UnitTest {
 
   "nextCollatzNumber" must {
