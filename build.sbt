@@ -12,8 +12,3 @@ val projecteuler = (project in file("."))
     libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test",
     libraryDependencies += ("org.scalacheck" %% "scalacheck" % "1.14.0" % "test").withDottyCompat(scalaVersion.value)
   )
-  .settings(
-    scalacOptions ++= {
-      if (isDotty.value) Seq("-language:Scala2", "-rewrite") else Nil
-    }
-  )
