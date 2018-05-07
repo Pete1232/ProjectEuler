@@ -23,12 +23,12 @@ object Problem014 {
 
   def longestChain(num: Long = 1, longestChainStart: Long = 1, longestChainLength: Long = 1, end: Long = 1000000): Future[Long] = {
     if (num <= end) {
-      if(!doNotCheck(num, end)){
-        val lengthOfThisChain = numbersInCollatzSequence(num)()
-        val lengthOFLongestChain = Future(longestChainLength)
+      if (!doNotCheck(num, end)) {
+        val lengthOfThisChain: Future[Long] = numbersInCollatzSequence(num)()
+        val lengthOFLongestChain: Future[Long] = Future(longestChainLength)
 
-        lengthOfThisChain.flatMap{ current =>
-          lengthOFLongestChain.flatMap{ longest =>
+        lengthOfThisChain.flatMap { current =>
+          lengthOFLongestChain.flatMap { longest =>
             if (current > longest) {
               longestChain(num + 1, num, current)
             } else {
@@ -45,8 +45,8 @@ object Problem014 {
   }
 
   def doNotCheck(num: Long, max: Long): Boolean = {
-    val rule1 = num % 2 == 0 && (2 * num) < max
-    val rule2 = (num - 1) % 3 == 0 && ((num - 1)/3) % 2 == 1
+    val rule1: Boolean = num % 2 == 0 && (2 * num) < max
+    val rule2: Boolean = (num - 1) % 3 == 0 && ((num - 1) / 3) % 2 == 1
     rule1 || rule2
   }
 }

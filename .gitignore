@@ -1,9 +1,7 @@
-*.class
 *.log
 
 # sbt specific
 .cache
-.history
 .lib/
 dist/*
 target/
@@ -19,5 +17,7 @@ project/plugins/project/
 
 # Project specific
 project/scalastyle-config.xml
-*/target
 */*/*/target
+
+.dotty-ide-artifact
+.dotty-ide.json

@@ -2,7 +2,7 @@ package solutions
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import solutions.Problem014.{longestChain, nextCollatzNumber, numbersInCollatzSequence}
+import solutions.Problem014.{longestChain, numbersInCollatzSequence}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
@@ -11,11 +11,6 @@ import scala.concurrent.{Await, Awaitable, Future}
 class Problem14Spec {
 
   private def await[T](awaitable: Awaitable[T]): T = Await.result(awaitable, Duration.Inf)
-
-  @Test
-  def methodNextCollatzNumberMustReturnTheNextCorrectly(): Unit = {
-    assertEquals(0L, nextCollatzNumber(0))
-  }
 
   @Test
   def methodNumbersInCollatzSequenceTestExamples(): Unit = {
@@ -35,16 +30,4 @@ class Problem14Spec {
       }
     }
   }
-
-  //  "nextCollatzNumber" must {
-  //    "multiply an odd number by 3 and add 1" in {
-  //      forAll(Generators.oddNumberGen){ oddNum =>
-  //        nextCollatzNumber(oddNum) mustBe (oddNum * 3) + 1
-  //      }
-  //    }
-  //    "halve an even number" in {
-  //      forAll(Generators.evenNumberGen){ evenNum =>
-  //        nextCollatzNumber(evenNum) mustBe (evenNum / 2)
-  //      }
-  //    }
 }

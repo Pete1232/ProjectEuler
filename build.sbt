@@ -1,14 +1,17 @@
 val dottyVersion = "0.8.0-RC1"
 
-lazy val settings = Seq(
+val settings = Seq(
   organization := "io.github.pete1232",
   version := "999-SNAPSHOT",
-  scalaVersion := dottyVersion,
-  libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
+  scalaVersion := dottyVersion
 )
 
-lazy val projecteuler = (project in file("."))
+val projecteuler = (project in file("."))
   .settings(settings: _*)
+  .settings(
+    libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test",
+    libraryDependencies += ("org.scalacheck" %% "scalacheck" % "1.14.0" % "test").withDottyCompat(scalaVersion.value)
+  )
   .settings(
     scalacOptions ++= {
       if (isDotty.value) Seq("-language:Scala2", "-rewrite") else Nil

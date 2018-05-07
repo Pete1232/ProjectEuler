@@ -16,18 +16,18 @@ object Problem008 extends App {
   println(findGreatestProduct(bigNumber, size))
 
   def getNumberFromIndex(largeNumber: String, index: Int, size: Int): Array[Char] = {
-    val shortenedNumber = largeNumber.drop(index)
+    val shortenedNumber: String = largeNumber.drop(index)
     shortenedNumber.take(size).toCharArray
   }
 
   def calculateProduct(number: Array[Char]): Long = {
-    val digitList = number.map(char => char.asDigit.toLong)
+    val digitList: Array[Long] = number.map(char => char.asDigit.toLong)
     digitList.product
   }
 
   def findGreatestProduct(longNumber: String, size: Int, highest: Long = 0, index: Int = 0): Long = {
-    val thisNumber = getNumberFromIndex(longNumber, index, size)
-    val thisProduct = calculateProduct(thisNumber)
+    val thisNumber: Array[Char] = getNumberFromIndex(longNumber, index, size)
+    val thisProduct: Long = calculateProduct(thisNumber)
     if (thisProduct > highest & index < longNumber.length - 1) {
       findGreatestProduct(longNumber, size, thisProduct, index + 1)
     }

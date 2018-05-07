@@ -2,6 +2,8 @@
 # ProjectEuler
 My solutions to the problems on projecteuler.net
 
+Written in Scala using the Dotty compiler
+
 ## Project structure
 All main classes are contained in the solutions package. Sbt allows the main class to run to be chosen at runtime in the console. Any reusable methods are contained within other packages and imorted into the solution scripts.
 
