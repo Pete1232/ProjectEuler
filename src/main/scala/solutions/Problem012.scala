@@ -1,15 +1,13 @@
 package solutions
 
-import java.util.logging.Logger
-
 import integer.IntMethods
 
-object Problem012 extends App with IntMethods{
+object Problem012 extends App with IntMethods {
   println(hasKDivisors(k = 500))
 
   def hasKDivisors(i: Int = 2, k: Int): Int = {
-    val tri = nthTriangle(i)
-    if(numberOfDivisors(tri) > k) tri else hasKDivisors(i + 1, k)
+    val tri: Int = nthTriangle(i)
+    if (numberOfDivisors(tri) > k) tri else hasKDivisors(i + 1, k)
   }
 
   def nthTriangle(n: Int): Int = {
@@ -17,7 +15,7 @@ object Problem012 extends App with IntMethods{
   }
 
   def numberOfDivisors(n: Int): Int = {
-    val pairs = getDivisorPairs[Int](n).unzip
+    val pairs: (List[Int], List[Int]) = getDivisorPairs[Int](n, 1).unzip
     (pairs._1 ++ pairs._2)
       .distinct
       .size

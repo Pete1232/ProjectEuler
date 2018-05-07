@@ -2,15 +2,15 @@ package solutions
 
 import integer.IntMethods
 
-object Problem003 extends App with IntMethods{
+object Problem003 extends App with IntMethods {
   private val n = 600851475143L
 
-  println(findLargestPrime(getDivisorPairs(n).tail))
+  println(findLargestPrime(getDivisorPairs(n, 1L).tail))
 
   def findLargestPrime(list: List[(Long, Long)], max: Long = 0): Long = {
-    if (!list.isEmpty) {
-      val firstEntry = list.head._1
-      val secondEntry = list.head._2
+    if (list.nonEmpty) {
+      val firstEntry: Long = list.head._1
+      val secondEntry: Long = list.head._2
 
       if (isPrime(firstEntry)) {
         findLargestPrime(list.tail, firstEntry)
@@ -22,7 +22,7 @@ object Problem003 extends App with IntMethods{
         findLargestPrime(list.tail, max)
       }
     }
-    else{
+    else {
       max
     }
   }

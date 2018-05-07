@@ -5,39 +5,40 @@ import scala.annotation.tailrec
 /**
   * Contains methods that are applicable to any integer, and likely to be reusable
   */
-  trait IntMethods {
+trait IntMethods {
 
   /**
     * Returns a list of all possible divisor pairs of a given integer
     *
-    * @param n the given integer
-    * @param i a number to iterate, starting at 1
+    * @param n           the given integer
+    * @param i           a number to iterate, starting at 1
     * @param divisorList the current list of found divisors to iterate, starting at Nil
     * @return the complete list of pairs
     */
-    @tailrec
-    final def getDivisorPairs[T](n: T, i: T = 1, divisorList: List[(T, T)] = Nil)(implicit num: Numeric[T]): List[(T, T)] ={
-      def makeDivisorPair(d: Long, n: Long): Option[(T, T)] ={
-        if(n % d == 0) {
-          Some(d.asInstanceOf[T], (n / d).asInstanceOf[T])
-        }
-        else {
-          None
-        }
+  @tailrec
+  final def getDivisorPairs[T](n: T, i: T, divisorList: List[(T, T)] = Nil)(implicit num: Numeric[T]): List[(T, T)] = {
+    def makeDivisorPair(d: Long, n: Long): Option[(T, T)] = {
+      if (n % d == 0) {
+        Some(d.asInstanceOf[T], (n / d).asInstanceOf[T])
       }
-      val maybePair = makeDivisorPair(num.toLong(i), num.toLong(n))
-
-      maybePair match {
-        case Some(pair) =>
-          if(divisorList.contains(pair.swap)){
-            divisorList
-          }
-          else{
-            getDivisorPairs(n, num.plus(i, num.one), divisorList :+ pair.copy(pair._1, pair._2))
-          }
-        case None => getDivisorPairs(n, num.plus(i, num.one), divisorList)
+      else {
+        None
       }
     }
+
+    val maybePair: Option[(T, T)] = makeDivisorPair(num.toLong(i), num.toLong(n))
+
+    maybePair match {
+      case Some(pair) =>
+        if (divisorList.contains(pair.swap)) {
+          divisorList
+        }
+        else {
+          getDivisorPairs(n, num.plus(i, num.one), divisorList :+ pair.copy(pair._1, pair._2))
+        }
+      case None => getDivisorPairs(n, num.plus(i, num.one), divisorList)
+    }
+  }
 
   /**
     * Method to determine if the given integer was prime.
@@ -48,16 +49,17 @@ import scala.annotation.tailrec
   def isPrime[T](number: T)(implicit n: Numeric[T]): Boolean = {
     @tailrec
     def checkPrime(divisor: Long = 2, number: Long): Boolean = {
-      if(divisor == number) {
+      if (divisor == number) {
         true
       }
-      else if(number%divisor != 0) {
+      else if (number % divisor != 0) {
         checkPrime(divisor + 1, number)
       }
       else {
         false
       }
     }
+
     checkPrime(number = n.toLong(number))
   }
 
@@ -65,22 +67,23 @@ import scala.annotation.tailrec
     * A generic division method to make up for the lack of support in the Scala Numeric class
     *
     * @param divisor the number to divide by.
-    * @param number the number to divide
+    * @param number  the number to divide
     * @return Some(number/divisor) if number was divisible by divisor, and None otherwise
     */
   def divide[T](divisor: T, number: T)(implicit n: Numeric[T]): Option[T] = {
     @tailrec
     def divideLoop(d: T, x: T, i: T = n.one): Option[T] = {
-      if(n.gt(n.times(d, i), x)){
+      if (n.gt(n.times(d, i), x)) {
         None
       }
-      else if(n.times(i, d) == x){
+      else if (n.times(i, d) == x) {
         Some(i)
       }
-      else{
+      else {
         divideLoop(d, x, n.plus(i, n.one))
       }
     }
+
     divideLoop(divisor, number)
   }
 
@@ -97,13 +100,14 @@ import scala.annotation.tailrec
         list
       }
       else {
-        val divisionResult = divide(divisor, number)
+        val divisionResult: Option[T] = divide(divisor, number)
         divisionResult match {
           case Some(_) => callbackLoop(divisor, divisionResult.get, list :+ divisor)
           case None => callbackLoop(n.plus(divisor, n.one), number, list)
         }
       }
     }
+
     callbackLoop(n.plus(n.one, n.one), x)
   }
 
@@ -115,9 +119,9 @@ import scala.annotation.tailrec
     * @return the lcm of x and y
     */
   def lcm[T](x: T, y: T)(implicit n: Numeric[T]): T = {
-    val factorsOfX = calculatePrimeFactors(x)
-    val factorsOfY = calculatePrimeFactors(y)
-    val mergedFactors = factorsOfX ++ factorsOfY.diff(factorsOfX)
+    val factorsOfX: List[T] = calculatePrimeFactors(x)
+    val factorsOfY: List[T] = calculatePrimeFactors(y)
+    val mergedFactors: List[T] = factorsOfX ++ factorsOfY.diff(factorsOfX)
     mergedFactors.product
   }
 
@@ -130,15 +134,16 @@ import scala.annotation.tailrec
   def lcm[T](list: List[T])(implicit n: Numeric[T]): T = {
     @tailrec
     def callbackLoop(list: List[T]): T = {
-      if(list.size == 1){
+      if (list.size == 1) {
         list.head
       }
       else {
-        val x = list.head
-        val y = list.last
+        val x: T = list.head
+        val y: T = list.last
         callbackLoop(list.drop(1).dropRight(1).::(lcm(x, y)))
       }
     }
+
     callbackLoop(list)
   }
 }

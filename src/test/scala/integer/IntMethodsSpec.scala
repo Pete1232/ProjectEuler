@@ -1,6 +1,9 @@
-import base.UnitSpec
-import integer.IntMethods
-class IntMethodsSpec extends UnitSpec with IntMethods{
+package integer
+
+import org.junit.Assert.assertEquals
+import org.junit.Test
+
+class IntMethodsSpec extends IntMethods {
 
   val primeByte: Byte = 7
   val primeShort: Short = 17669
@@ -11,78 +14,74 @@ class IntMethodsSpec extends UnitSpec with IntMethods{
   val compInt: Int = 101923
   val compLong: Long = 101923L
 
-  "Calling isPrime on a number" should "return true if the number is a prime integer of type byte" in {
-    isPrime(primeByte) shouldBe true
-  }
-  it should "return true if the number is a prime integer of type short" in {
-    isPrime(primeShort) shouldBe true
-  }
-  it should "return true if the number is a prime integer of type int" in {
-    isPrime(primeInt) shouldBe true
-  }
-  it should "return true if the number is a prime integer of type long" in {
-    isPrime(primeLong) shouldBe true
-  }
-  it should "return false if that number is not prime and of type byte" in {
-    isPrime(compByte) shouldBe false
-  }
-  it should "return false if that number is not prime and of type short" in {
-    isPrime(compShort) shouldBe false
-  }
-  it should "return false if that number is not prime and of type int" in {
-    isPrime(compInt) shouldBe false
-  }
-  it should "return false if that number is not prime and of type long" in {
-    isPrime(compLong) shouldBe false
+  @Test
+  def methodIsPrimeShouldIdentifyAPrime(): Unit = {
+    assertEquals(true, isPrime(primeByte))
+    assertEquals(true, isPrime(primeShort))
+    assertEquals(true, isPrime(primeInt))
+    assertEquals(true, isPrime(primeLong))
   }
 
-  "Calling getDivisorPairs on a number" should "return a list of all a numbers divisor pairs if it is of type byte" in {
-    val listByte = List[(Byte, Byte)]((1, 9), (3, 3))
-    getDivisorPairs(compByte) should contain theSameElementsAs listByte
-  }
-  it should "return a list of all a numbers divisor pairs if it is of type short" in {
-    val listShort = List[(Short, Short)]((1, 17671), (41, 431))
-    getDivisorPairs(compShort) should contain theSameElementsAs listShort
-  }
-  it should "return a list of all a numbers divisor pairs if it is of type int" in {
-    val listInt = List[(Int, Int)]((1, 101923), (227, 449))
-    getDivisorPairs(compInt) shouldBe listInt
-  }
-  it should "return a list of all a numbers divisor pairs if it is of type long" in {
-    val listLong = List[(Long, Long)]((1L, 101923L), (227L, 449L))
-    getDivisorPairs(compLong) shouldBe listLong
+  @Test
+  def methodIsPrimeShouldIdentifyANonPrime(): Unit = {
+    assertEquals(false, isPrime(compByte))
+    assertEquals(false, isPrime(compShort))
+    assertEquals(false, isPrime(compInt))
+    assertEquals(false, isPrime(compLong))
   }
 
-  "Calling divide" should "return the number divided by the divisor as Some value" in {
-    divide(2, 2) shouldBe Some(1)
-    divide(5, 10) shouldBe Some(2)
-    divide(2, 16) shouldBe Some(8)
-    divide(3, 15) shouldBe Some(5)
-  }
-  it should "return the None if the number was not divisible by the divisor" in {
-    divide(5, 11) shouldBe None
-    divide(2, 17) shouldBe None
-    divide(3, 16) shouldBe None
+  @Test
+  def methodGetDivisorPairsShouldReturnAListOfDivisors(): Unit = {
+    val listByte: List[(Byte, Byte)] = List[(Byte, Byte)]((1, 9), (3, 3))
+    assertEquals(listByte, getDivisorPairs(compByte, 1.toByte))
+
+    val listShort: List[(Short, Short)] = List[(Short, Short)]((1, 17671), (41, 431))
+    assertEquals(listShort, getDivisorPairs(compShort, 1.toShort))
+
+    val listInt: List[(Int, Int)] = List[(Int, Int)]((1, 101923), (227, 449))
+    assertEquals(listInt, getDivisorPairs(compInt, 1))
+
+    val listLong: List[(Long, Long)] = List[(Long, Long)]((1L, 101923L), (227L, 449L))
+    assertEquals(listLong, getDivisorPairs(compLong, 1L))
   }
 
-  "Calling calculatePrimeFactors on a number" should "return its prime factorisation" in {
-    calculatePrimeFactors(4) should contain theSameElementsAs List(2, 2)
-    calculatePrimeFactors(5) should contain theSameElementsAs List(5)
-    calculatePrimeFactors(12) should contain theSameElementsAs List(2, 2, 3)
-    calculatePrimeFactors(64) should contain theSameElementsAs List(2, 2, 2, 2, 2, 2)
+  @Test
+  def methodDivideShouldReturnADivisionResultAsSome(): Unit = {
+    assertEquals(Some(1), divide(2, 2))
+    assertEquals(Some(2), divide(5, 10))
+    assertEquals(Some(8), divide(2, 16))
+    assertEquals(Some(5), divide(3, 15))
   }
 
-  "Calling lcm on two numbers" should "return their lowest common multiple" in {
-    lcm(2, 2) shouldBe 2
-    lcm(4, 5) shouldBe 20
-    lcm(5, 13) shouldBe 65
-    lcm(23, 12) shouldBe 276
-    lcm(16, 64) shouldBe 64
+  @Test
+  def methodDivideShouldReturnNoneIfDivisionIsNotExact(): Unit = {
+    assertEquals(None, divide(5, 11))
+    assertEquals(None, divide(2, 17))
+    assertEquals(None, divide(3, 16))
   }
-  "Calling lcm on a list of numbers" should "return their lowest common multiple" in {
-    lcm(List(2, 2)) shouldBe 2
-    lcm(List(4, 5, 6)) shouldBe 60
-    lcm(List(16, 64)) shouldBe 64
-    lcm(List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) shouldBe 2520
+
+  @Test
+  def methodCalculatePrimeFactorsShouldReturnPrimeFactorsInAList(): Unit = {
+    assertEquals(List(2, 2), calculatePrimeFactors(4))
+    assertEquals(List(5), calculatePrimeFactors(5))
+    assertEquals(List(2, 2, 3), calculatePrimeFactors(12))
+    assertEquals(List(2, 2, 2, 2, 2, 2), calculatePrimeFactors(64))
+  }
+
+  @Test
+  def methodLCMShouldReturnLowestMultipleOfTwoInt(): Unit = {
+    assertEquals(2, lcm(2, 2))
+    assertEquals(20, lcm(4, 5))
+    assertEquals(65, lcm(5, 13))
+    assertEquals(276, lcm(23, 12))
+    assertEquals(64, lcm(16, 64))
+  }
+
+  @Test
+  def methodLCMShouldReturnLowestMultipleOfAList(): Unit = {
+    assertEquals(2, lcm(List(2, 2)))
+    assertEquals(60, lcm(List(4, 5, 6)))
+    assertEquals(64, lcm(List(16, 64)))
+    assertEquals(2520, lcm(List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)))
   }
 }

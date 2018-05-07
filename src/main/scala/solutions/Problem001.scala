@@ -1,6 +1,6 @@
 package solutions
 
-object Problem001 extends App{
+object Problem001 extends App {
   private val end = 1000
   println(addToSumUntilEnd(end))
 

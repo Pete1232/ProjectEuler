@@ -1,19 +1,16 @@
-val appDependencies = Seq(
-)
-
-val testDependencies = Seq(
-  "org.scalactic" %% "scalactic" % "3.0.5" % "test",
-  "org.scalatest" %% "scalatest" % "3.0.5" % "test",
-  "org.scalacheck" %% "scalacheck" % "1.14.0" % "test"
-)
+val dottyVersion = "0.8.0-RC1"
 
 lazy val settings = Seq(
   organization := "io.github.pete1232",
   version := "999-SNAPSHOT",
-  scalaVersion := "2.12.6",
-  libraryDependencies ++= appDependencies ++ testDependencies,
-  scalacOptions ++= Seq("-feature", "-language:postfixOps")
+  scalaVersion := dottyVersion,
+  libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
 )
 
-lazy val projecteuler = (project in file(".")).
-  settings(settings: _*)
+lazy val projecteuler = (project in file("."))
+  .settings(settings: _*)
+  .settings(
+    scalacOptions ++= {
+      if (isDotty.value) Seq("-language:Scala2", "-rewrite") else Nil
+    }
+  )

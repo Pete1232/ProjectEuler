@@ -2,7 +2,7 @@ package solutions
 
 import integer.IntMethods
 
-object Problem009 extends App with IntMethods{
+object Problem009 extends App with IntMethods {
   calculateTriple(2)
 
   def calculateTriple(n: Int): Unit = {
@@ -13,41 +13,41 @@ object Problem009 extends App with IntMethods{
     // Step 5: See if x+y+z = 1000. The result will be relatively small so this should be efficient enough
 
     //Step 1
-    val r: Long = 2*n
+    val r: Long = 2 * n
 
     //Step 2
-    val st: Long = r*r/2
+    val st: Long = r * r / 2
 
     //Step 3
     //IntMethods.getDivisorPairs
 
     // Step 4 & 5
-    def checkPairs(pairs: List[(Long, Long)]): Unit ={
+    def checkPairs(pairs: List[(Long, Long)]): Unit = {
       def whenPairExists(pair: (Long, Long)): Unit = {
-        val s = pair._1
-        val t = pair._2
-        if(isTarget(s, t)) {
-          val x = r + s
-          val y = r + t
-          val z = r + s + t
-          println("Found it!: Triple (" + x + ", " + y + ", " + z + ") with product " + (x*y*z))
+        val s: Long = pair._1
+        val t: Long = pair._2
+        if (isTarget(s, t)) {
+          val x: Long = r + s
+          val y: Long = r + t
+          val z: Long = r + s + t
+          println("Found it!: Triple (" + x + ", " + y + ", " + z + ") with product " + (x * y * z))
         }
-        else{
+        else {
           checkPairs(pairs.tail)
         }
       }
-      def isTarget(s: Long, t: Long): Boolean ={
-        val x = r + s
-        val y = r + t
-        val z = r + s + t
-        3*r + 2*s + 2*t==1000
+
+      def isTarget(s: Long, t: Long): Boolean = {
+        3 * r + 2 * s + 2 * t == 1000
       }
+
       pairs.headOption match {
         case Some(pair) => whenPairExists(pair)
         case None => calculateTriple(n + 1)
       }
     }
-    val pairs: List[(Long, Long)] = getDivisorPairs(st)
+
+    val pairs: List[(Long, Long)] = getDivisorPairs(st, 1L)
     checkPairs(pairs)
   }
 }
