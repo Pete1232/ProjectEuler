@@ -1,9 +1,9 @@
-package integer
+package numeric
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class IntMethodsSpec extends IntMethods {
+class NumericMethodsSpec extends NumericMethods {
 
   val primeByte: Byte = 7
   val primeShort: Short = 17669

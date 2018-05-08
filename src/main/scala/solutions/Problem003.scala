@@ -1,8 +1,8 @@
 package solutions
 
-import integer.IntMethods
+import numeric.NumericMethods
 
-object Problem003 extends App with IntMethods {
+object Problem003 extends App with NumericMethods {
   private val n = 600851475143L
 
   println(findLargestPrime(getDivisorPairs(n, 1L).tail))

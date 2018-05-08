@@ -1,11 +1,11 @@
-package integer
+package numeric
 
 import scala.annotation.tailrec
 
 /**
   * Contains methods that are applicable to any integer, and likely to be reusable
   */
-trait IntMethods {
+trait NumericMethods {
 
   /**
     * Returns a list of all possible divisor pairs of a given integer

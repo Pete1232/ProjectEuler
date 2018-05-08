@@ -1,8 +1,8 @@
 package solutions
 
-import integer.IntMethods
+import numeric.NumericMethods
 
-object Problem010 extends App with IntMethods {
+object Problem010 extends App with NumericMethods {
 
   def primeAdder(j: Long = 2, end: Long, currentTotal: Long = 2): Long = {
     val i: Long = 2 * j - 1

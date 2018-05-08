@@ -1,8 +1,8 @@
 package solutions
 
-import integer.IntMethods
+import numeric.NumericMethods
 
-object Problem012 extends App with IntMethods {
+object Problem012 extends App with NumericMethods {
   println(hasKDivisors(k = 500))
 
   def hasKDivisors(i: Int = 2, k: Int): Int = {

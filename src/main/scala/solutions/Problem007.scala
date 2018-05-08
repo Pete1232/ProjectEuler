@@ -1,8 +1,8 @@
 package solutions
 
-import integer.IntMethods
+import numeric.NumericMethods
 
-object Problem007 extends App with IntMethods {
+object Problem007 extends App with NumericMethods {
   private val stop = 1001
   println(nthPrime(target = stop))
 

@@ -1,8 +1,8 @@
 package solutions
 
-import integer.IntMethods
+import numeric.NumericMethods
 
-object Problem009 extends App with IntMethods {
+object Problem009 extends App with NumericMethods {
   calculateTriple(2)
 
   def calculateTriple(n: Int): Unit = {
