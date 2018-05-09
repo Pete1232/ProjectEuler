@@ -24,11 +24,11 @@ trait LongNumberNumeric extends Numeric[LongNumber] {
     LongNumber(result, isNegative = x.isNegative && y.isNegative)
   }
 
-  override def minus(x: LongNumber, y: LongNumber): LongNumber = ???
+  override def minus(x: LongNumber, y: LongNumber): LongNumber = plus(x, negate(y))
 
   override def times(x: LongNumber, y: LongNumber): LongNumber = ???
 
-  override def negate(x: LongNumber): LongNumber = ???
+  override def negate(x: LongNumber): LongNumber = x.copy(isNegative = !x.isNegative)
 
   override def fromInt(x: Int): LongNumber = {
 
