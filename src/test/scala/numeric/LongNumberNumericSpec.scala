@@ -22,4 +22,8 @@ class LongNumberNumericSpec extends Properties("Long number numeric") {
   property("positive int addition") = forAll(Gen.posNum[Int], Gen.posNum[Int]) { (x: Int, y: Int) =>
     plus(fromInt(x), fromInt(y)) == fromInt(x + y)
   }
+
+  property("negative int addition") = forAll(Gen.negNum[Int], Gen.negNum[Int]) { (x: Int, y: Int) =>
+    plus(fromInt(x), fromInt(y)) == fromInt(x + y)
+  }
 }

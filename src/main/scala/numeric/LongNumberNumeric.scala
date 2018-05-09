@@ -24,7 +24,7 @@ trait LongNumberNumeric extends Numeric[LongNumber] {
 
     println(s"x: $x, y: $y, res: $result")
 
-    LongNumber(result, isNegative = false)
+    LongNumber(result, isNegative = x.isNegative && y.isNegative)
   }
 
   override def minus(x: LongNumber, y: LongNumber): LongNumber = ???
