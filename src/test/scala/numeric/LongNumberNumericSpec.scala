@@ -23,15 +23,39 @@ class LongNumberNumericSpec extends Properties("Long number numeric") {
     plus(fromInt(x), fromInt(y)) == fromInt(x + y)
   }
 
+  property("positive int plus negative int") = forAll(Gen.posNum[Int], Gen.negNum[Int]) { (x: Int, y: Int) =>
+    plus(fromInt(x), fromInt(y)) == fromInt(x + y)
+  }
+
+  property("negative int plus positive int") = forAll(Gen.negNum[Int], Gen.posNum[Int]) { (x: Int, y: Int) =>
+    plus(fromInt(x), fromInt(y)) == fromInt(x + y)
+  }
+
   property("negative int plus negative int") = forAll(Gen.negNum[Int], Gen.negNum[Int]) { (x: Int, y: Int) =>
     plus(fromInt(x), fromInt(y)) == fromInt(x + y)
+  }
+
+  property("int plus int") = forAll { (x: Int, y: Int) =>
+    plus(fromInt(x), fromInt(y)) == fromInt(x + y)
+  }
+
+  property("positive int minus positive int") = forAll(Gen.posNum[Int], Gen.posNum[Int]) { (x: Int, y: Int) =>
+    plus(fromInt(x), fromInt(y)) == fromInt(x - y)
+  }
+
+  property("positive int minus negative int") = forAll(Gen.posNum[Int], Gen.negNum[Int]) { (x: Int, y: Int) =>
+    minus(fromInt(x), fromInt(y)) == fromInt(x - y)
   }
 
   property("negative int minus positive int") = forAll(Gen.negNum[Int], Gen.posNum[Int]) { (x: Int, y: Int) =>
     minus(fromInt(x), fromInt(y)) == fromInt(x - y)
   }
 
-  property("positive int minus negative int") = forAll(Gen.posNum[Int], Gen.negNum[Int]) { (x: Int, y: Int) =>
+  property("negative int minus negative int") = forAll(Gen.negNum[Int], Gen.negNum[Int]) { (x: Int, y: Int) =>
+    minus(fromInt(x), fromInt(y)) == fromInt(x - y)
+  }
+
+  property("int minus int") = forAll { (x: Int, y: Int) =>
     minus(fromInt(x), fromInt(y)) == fromInt(x - y)
   }
 
