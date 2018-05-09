@@ -6,22 +6,48 @@ trait LongNumberNumeric extends Numeric[LongNumber] {
 
   override def plus(x: LongNumber, y: LongNumber): LongNumber = {
 
-    val preparedSequence: Seq[(Int, Int)] = (0, 0) +: x.digits.reverse.zipAll(y.digits.reverse, 0, 0).reverse
+    if (x.isNegative == y.isNegative) {
+      // addition
+      val preparedSequence: Seq[(Int, Int)] = (0, 0) +: x.digits.reverse.zipAll(y.digits.reverse, 0, 0).reverse
 
-    val result: Seq[Int] = {
-      preparedSequence
-        // add up leaving addition results as-is
-        .scanRight(0) { (thisAddition, carriedOver) =>
-        (carriedOver / 10) + thisAddition._1 + thisAddition._2
+      val result: Seq[Int] = {
+        preparedSequence
+          // add up leaving addition results as-is
+          .scanRight(0) { (thisAddition, carriedOver) =>
+          (carriedOver / 10) + thisAddition._1 + thisAddition._2
+        }
+          .dropWhile(_ == 0) // drop any extra digits at the start (will happen when x + y >= 10)
+          .dropRight(1) // drop the 0 added by the scan
+          .map(_ % 10) // keep only the last digit in each position
       }
-        // drop any extra digits at the start (will happen when x + y >= 10)
-        .dropWhile(_ == 0)
-        // drop the 0 added by the scan
-        .dropRight(1)
-        // keep only the last digit in each position
-        .map(_ % 10)
+      LongNumber(result, isNegative = if (result.isEmpty) false else x.isNegative) // +/+ or -/-
+    } else if (y.isNegative) {
+      // subtraction
+      if (gteq(x, negate(y))) {
+        // if the absolute value of x is higher than y continue as-is
+        val preparedSequence: Seq[(Int, Int)] = {
+          (0, 0) +: x.digits.reverse.zipAll(y.digits.reverse, 0, 0).reverse
+        }
+        val result: Seq[Int] = {
+          preparedSequence
+            // add up leaving addition results as-is
+            .scanRight(0) { (thisAddition, carriedOver) =>
+            val firstRes: Int = thisAddition._1 - thisAddition._2 - (carriedOver / 10)
+            if (firstRes < 0) 10 + firstRes + 10 else firstRes // if subtraction ended negative need to carry 1
+          }
+            .map(_ % 10) // keep only the last digit in each position
+            .dropWhile(_ == 0) // drop any extra digits at the start (will happen when x + y >= 10)
+            .dropRight(1) // drop the 0 added by the scan
+        }
+        // TODO better way of dealing with the two-zeros problem
+        val out = LongNumber(result.map(_.abs), isNegative = if (result.isEmpty) false else result.head < 0)
+        out
+      } else {
+        negate(plus(negate(y), negate(x))) // otherwise do the subtraction the other way round and negate
+      }
+    } else {
+      plus(y, x) // addition is commutative
     }
-    LongNumber(result, isNegative = x.isNegative && y.isNegative)
   }
 
   override def minus(x: LongNumber, y: LongNumber): LongNumber = plus(x, negate(y))
@@ -53,5 +79,40 @@ trait LongNumberNumeric extends Numeric[LongNumber] {
 
   override def toDouble(x: LongNumber): Double = ???
 
-  override def compare(x: LongNumber, y: LongNumber): Int = ???
+  override def compare(x: LongNumber, y: LongNumber): Int = {
+    (x.isNegative, y.isNegative) match {
+      case (true, false) => // x < y
+        -1
+      case (false, true) => // x > y
+        1
+      case (true, true) => // x,y > 0
+        if (x.digits == y.digits) { // x = y
+          0
+        } else if (x.digits.length > y.digits.length) { // x < y
+          -1
+        } else if (x.digits.length < y.digits.length) { // x > y
+          1
+        } else {
+          x.digits.zip(y.digits) // know that these are the same size and not Nil
+            .collectFirst {
+            case digits if digits._1 != digits._2 =>
+              digits._1.compareTo(digits._2)
+          }.getOrElse(0) // should not happen
+        }
+      case (false, false) => // x,y > 0
+        if (x.digits == y.digits) { // x = y
+          0
+        } else if (x.digits.length > y.digits.length) { // x > y
+          1
+        } else if (x.digits.length < y.digits.length) { // x < y
+          -1
+        } else {
+          x.digits.zip(y.digits) // know that these are the same size and not Nil
+            .collectFirst {
+            case digits if digits._1 != digits._2 =>
+              digits._1.compareTo(digits._2)
+          }.getOrElse(0) // should not happen
+        }
+    }
+  }
 }

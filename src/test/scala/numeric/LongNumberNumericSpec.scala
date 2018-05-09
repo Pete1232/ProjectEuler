@@ -1,65 +1,90 @@
 package numeric
 
 import numeric.LongNumber.Numeric._
-import org.scalacheck.Prop.{forAll, propBoolean, throws}
-import org.scalacheck.{Gen, Properties}
+import org.scalacheck.Prop.{all, forAll, propBoolean, throws}
+import org.scalacheck.{Gen, Prop, Properties}
 
-class LongNumberNumericSpec extends Properties("Long number numeric") {
-  property("zero value check") = propBoolean(LongNumber(Nil, isNegative = false) == zero)
+class LongNumberNumericSpec extends Properties("LongNumberNumericSpec") {
+  property("zeroCheck") = propBoolean(LongNumber(Nil, isNegative = false) == zero)
 
-  property("one value check") = propBoolean(LongNumber(Seq(1), isNegative = false) == one)
+  property("oneCheck") = propBoolean(LongNumber(Seq(1), isNegative = false) == one)
 
-  property("negative one value check") = propBoolean(LongNumber(Seq(1), isNegative = true) == fromInt(-1))
+  property("negativeOneCheck") = propBoolean(LongNumber(Seq(1), isNegative = true) == fromInt(-1))
 
-  property("ten value check") = propBoolean(LongNumber(Seq(1, 0), isNegative = false) == fromInt(10))
+  property("tenCheck") = propBoolean(LongNumber(Seq(1, 0), isNegative = false) == fromInt(10))
 
-  property("minus ten value check") = propBoolean(LongNumber(Seq(1, 0), isNegative = true) == fromInt(-10))
+  property("minusTenCheck") = propBoolean(LongNumber(Seq(1, 0), isNegative = true) == fromInt(-10))
 
-  property("max int value check") = propBoolean(LongNumber(Seq(2, 1, 4, 7, 4, 8, 3, 6, 4, 7), isNegative = false) == fromInt(Int.MaxValue))
+  property("maxIntCheck") = propBoolean(LongNumber(Seq(2, 1, 4, 7, 4, 8, 3, 6, 4, 7), isNegative = false) == fromInt(Int.MaxValue))
 
-  property("min int value check") = propBoolean(LongNumber(Seq(2, 1, 4, 7, 4, 8, 3, 6, 4, 8), isNegative = true) == fromInt(Int.MinValue))
+  property("minIntCheck") = propBoolean(LongNumber(Seq(2, 1, 4, 7, 4, 8, 3, 6, 4, 8), isNegative = true) == fromInt(Int.MinValue))
 
-  property("positive int plus positive int") = forAll(Gen.posNum[Int], Gen.posNum[Int]) { (x: Int, y: Int) =>
+  val numSafe: Gen[Int] = Gen.chooseNum(Int.MinValue / 2, Int.MaxValue / 2)
+
+  val posNumSafe: Gen[Int] = Gen.chooseNum(0, Int.MaxValue / 2)
+
+  val negNumSafe: Gen[Int] = Gen.chooseNum(Int.MinValue / 2, 0)
+
+  property("positiveIntPlusPositiveInt") = forAll(posNumSafe, posNumSafe) { (x: Int, y: Int) =>
     plus(fromInt(x), fromInt(y)) == fromInt(x + y)
   }
 
-  property("positive int plus negative int") = forAll(Gen.posNum[Int], Gen.negNum[Int]) { (x: Int, y: Int) =>
+  property("positiveIntPlusNegativeInt") = forAll(posNumSafe, negNumSafe) { (x: Int, y: Int) =>
     plus(fromInt(x), fromInt(y)) == fromInt(x + y)
   }
 
-  property("negative int plus positive int") = forAll(Gen.negNum[Int], Gen.posNum[Int]) { (x: Int, y: Int) =>
+  property("negativeIntPlusPositiveInt") = forAll(negNumSafe, posNumSafe) { (x: Int, y: Int) =>
     plus(fromInt(x), fromInt(y)) == fromInt(x + y)
   }
 
-  property("negative int plus negative int") = forAll(Gen.negNum[Int], Gen.negNum[Int]) { (x: Int, y: Int) =>
+  property("negativeIntPlusNegativeInt") = forAll(negNumSafe, negNumSafe) { (x: Int, y: Int) =>
     plus(fromInt(x), fromInt(y)) == fromInt(x + y)
   }
 
-  property("int plus int") = forAll { (x: Int, y: Int) =>
+  property("intPlusInt") = forAll(numSafe, numSafe) { (x: Int, y: Int) =>
     plus(fromInt(x), fromInt(y)) == fromInt(x + y)
   }
 
-  property("positive int minus positive int") = forAll(Gen.posNum[Int], Gen.posNum[Int]) { (x: Int, y: Int) =>
-    plus(fromInt(x), fromInt(y)) == fromInt(x - y)
-  }
-
-  property("positive int minus negative int") = forAll(Gen.posNum[Int], Gen.negNum[Int]) { (x: Int, y: Int) =>
+  property("positiveIntMinusPositiveInt") = forAll(posNumSafe, posNumSafe) { (x: Int, y: Int) =>
     minus(fromInt(x), fromInt(y)) == fromInt(x - y)
   }
 
-  property("negative int minus positive int") = forAll(Gen.negNum[Int], Gen.posNum[Int]) { (x: Int, y: Int) =>
+  property("positiveIntMinusNegativeInt") = forAll(posNumSafe, negNumSafe) { (x: Int, y: Int) =>
     minus(fromInt(x), fromInt(y)) == fromInt(x - y)
   }
 
-  property("negative int minus negative int") = forAll(Gen.negNum[Int], Gen.negNum[Int]) { (x: Int, y: Int) =>
+  property("negativeIntMinusPositiveInt") = forAll(negNumSafe, posNumSafe) { (x: Int, y: Int) =>
     minus(fromInt(x), fromInt(y)) == fromInt(x - y)
   }
 
-  property("int minus int") = forAll { (x: Int, y: Int) =>
+  property("negativeIntMinusNegativeInt") = forAll(negNumSafe, negNumSafe) { (x: Int, y: Int) =>
     minus(fromInt(x), fromInt(y)) == fromInt(x - y)
   }
 
-  property("uniqueness") = throws(classOf[IllegalArgumentException]) {
+  property("intMinusInt") = forAll(numSafe, numSafe) { (x: Int, y: Int) =>
+    minus(fromInt(x), fromInt(y)) == fromInt(x - y)
+  }
+
+  property("longNumbersExpressionsMustBeUnique") = throws(classOf[IllegalArgumentException]) {
     LongNumber(Seq(0, 1), isNegative = false)
   }
+
+  val associativeAddition: Prop = forAll(numSafe, numSafe, numSafe) { (x: Int, y: Int, z: Int) =>
+    plus(plus(fromInt(x), fromInt(y)), fromInt(z)) == plus(fromInt(x), plus(fromInt(y), fromInt(z)))
+  }
+
+  val commutativeAddition: Prop = forAll(numSafe, numSafe) { (x: Int, y: Int) =>
+    plus(fromInt(x), fromInt(y)) == plus(fromInt(y), fromInt(x))
+  }
+
+  val additiveIdentity: Prop = forAll(numSafe) { y: Int =>
+    plus(fromInt(y), zero) == fromInt(y)
+  }
+
+  val additiveInverses: Prop = forAll(numSafe) { x: Int =>
+    plus(fromInt(x), negate(fromInt(x))) == zero
+  }
+
+  property("longNumbersMustFormAnAbelianGroupUnderAddition") =
+    all(associativeAddition, commutativeAddition, additiveIdentity, additiveInverses)
 }
