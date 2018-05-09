@@ -21,9 +21,6 @@ trait LongNumberNumeric extends Numeric[LongNumber] {
         // keep only the last digit in each position
         .map(_ % 10)
     }
-
-    println(s"x: $x, y: $y, res: $result")
-
     LongNumber(result, isNegative = x.isNegative && y.isNegative)
   }
 

@@ -1,7 +1,7 @@
 package numeric
 
 import numeric.LongNumber.Numeric._
-import org.scalacheck.Prop.{forAll, propBoolean}
+import org.scalacheck.Prop.{forAll, propBoolean, throws}
 import org.scalacheck.{Gen, Properties}
 
 class LongNumberNumericSpec extends Properties("Long number numeric") {
@@ -25,5 +25,9 @@ class LongNumberNumericSpec extends Properties("Long number numeric") {
 
   property("negative int addition") = forAll(Gen.negNum[Int], Gen.negNum[Int]) { (x: Int, y: Int) =>
     plus(fromInt(x), fromInt(y)) == fromInt(x + y)
+  }
+
+  property("uniqueness") = throws(classOf[IllegalArgumentException]) {
+    LongNumber(Seq(0, 1), isNegative = false)
   }
 }
