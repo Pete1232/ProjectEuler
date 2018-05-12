@@ -2,7 +2,7 @@ package numeric
 
 import numeric.LongNumber.Numeric._
 import numeric.LongNumber.fromBigInt
-import org.scalacheck.Prop.{all, forAll, propBoolean, throws}
+import org.scalacheck.Prop.{all, forAll, forAllNoShrink, propBoolean, throws}
 import org.scalacheck.{Gen, Prop, Properties}
 
 class LongNumberNumericSpec extends Properties("LongNumberNumericSpec") {
@@ -40,6 +40,10 @@ class LongNumberNumericSpec extends Properties("LongNumberNumericSpec") {
 
   property("bigIntMinusBigInt") = forAll { (x: BigInt, y: BigInt) =>
     minus(fromBigInt(x), fromBigInt(y)) == fromBigInt(x - y)
+  }
+
+  property("bigIntTimesBigInt") = forAllNoShrink { (x: BigInt, y: BigInt) =>
+    times(fromBigInt(x), fromBigInt(y)) == fromBigInt(x * y)
   }
 
   property("longNumbersExpressionsMustBeUnique") = throws(classOf[IllegalArgumentException]) {

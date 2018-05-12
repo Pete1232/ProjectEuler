@@ -1,5 +1,7 @@
 package numeric
 
+import scala.annotation.tailrec
+
 trait Test
 
 trait LongNumberNumeric extends Numeric[LongNumber] {
@@ -52,7 +54,43 @@ trait LongNumberNumeric extends Numeric[LongNumber] {
 
   override def minus(x: LongNumber, y: LongNumber): LongNumber = plus(x, negate(y))
 
-  override def times(x: LongNumber, y: LongNumber): LongNumber = ???
+  override def times(x: LongNumber, y: LongNumber): LongNumber = {
+    val multiplier: Seq[(Int, Int)] = x.digits.reverse.zipWithIndex // the index is the number of digits to shift by before addition
+    @tailrec
+    def calculateMultiple(currentTotal: LongNumber, multiplier: Seq[(Int, Int)]): LongNumber = {
+      if (multiplier.isEmpty) {
+        currentTotal
+      } else {
+        val (multiple, offset) = multiplier.head
+
+        @tailrec
+        def doMultiple(count: Int, total: LongNumber): LongNumber = {
+          if (count == 0) {
+            total
+          } else {
+            doMultiple(count - 1, plus(y, total))
+          }
+        }
+
+        val newTotal: LongNumber = {
+          val toAdd: Seq[Int] = doMultiple(multiple, zero).digits match {
+            case Nil => Nil
+            case nonZero: Seq[Int] => nonZero ++ Seq.fill(offset)(0)
+          }
+          plus(LongNumber(toAdd, y.isNegative), currentTotal)
+        }
+        calculateMultiple(newTotal, multiplier.tail)
+      }
+    }
+
+    val resultIsNegative: Boolean = if (x.digits.isEmpty || y.digits.isEmpty) { // zero is not false
+      false
+    } else {
+      x.isNegative != y.isNegative // if x and y have opposite signs the result is negative
+    }
+
+    calculateMultiple(zero, multiplier).copy(isNegative = resultIsNegative)
+  }
 
   override def negate(x: LongNumber): LongNumber = x.copy(isNegative = !x.isNegative)
 
