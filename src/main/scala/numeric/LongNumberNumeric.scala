@@ -109,47 +109,48 @@ trait LongNumberNumeric extends Numeric[LongNumber] {
     LongNumber(longValue, isNegative)
   }
 
-  override def toInt(x: LongNumber): Int = ???
+  override def toInt(x: LongNumber): Int = x.toBigInt.intValue()
 
-  override def toLong(x: LongNumber): Long = ???
+  override def toLong(x: LongNumber): Long = x.toBigInt.longValue()
 
-  override def toFloat(x: LongNumber): Float = ???
+  override def toFloat(x: LongNumber): Float = x.toBigInt.floatValue()
 
-  override def toDouble(x: LongNumber): Double = ???
+  override def toDouble(x: LongNumber): Double = x.toBigInt.doubleValue()
 
   override def compare(x: LongNumber, y: LongNumber): Int = {
+
+    def compareSameMagnitude: Int = {
+      if (x.digits == y.digits) { // x == y
+        0
+      } else {
+        x.digits.zip(y.digits) // know that these are the same size and not Nil
+          .collectFirst {
+          case digits: (Int, Int) if digits._1 != digits._2 =>
+            digits._1.compareTo(digits._2)
+        }.getOrElse(0) // should not happen
+      }
+    }
+
     (x.isNegative, y.isNegative) match {
       case (true, false) => // x < y
         -1
       case (false, true) => // x > y
         1
       case (true, true) => // x,y > 0
-        if (x.digits == y.digits) { // x = y
-          0
-        } else if (x.digits.length > y.digits.length) { // x < y
+        if (x.digits.length > y.digits.length) { // x < y
           -1
         } else if (x.digits.length < y.digits.length) { // x > y
           1
         } else {
-          x.digits.zip(y.digits) // know that these are the same size and not Nil
-            .collectFirst {
-            case digits if digits._1 != digits._2 =>
-              digits._1.compareTo(digits._2)
-          }.getOrElse(0) // should not happen
+          compareSameMagnitude
         }
       case (false, false) => // x,y > 0
-        if (x.digits == y.digits) { // x = y
-          0
-        } else if (x.digits.length > y.digits.length) { // x > y
+        if (x.digits.length > y.digits.length) { // x > y
           1
         } else if (x.digits.length < y.digits.length) { // x < y
           -1
         } else {
-          x.digits.zip(y.digits) // know that these are the same size and not Nil
-            .collectFirst {
-            case digits if digits._1 != digits._2 =>
-              digits._1.compareTo(digits._2)
-          }.getOrElse(0) // should not happen
+          compareSameMagnitude
         }
     }
   }
