@@ -66,6 +66,28 @@ class LongNumberNumericSpec extends Properties("LongNumberNumericSpec") {
     plus(fromBigInt(x), negate(fromBigInt(x))) == zero
   }
 
-  property("longNumbersMustFormAnAbelianGroupUnderAddition") =
-    all(associativeAddition, commutativeAddition, additiveIdentity, additiveInverses)
+  val associativeMultiplication: Prop = forAll { (x: BigInt, y: BigInt, z: BigInt) =>
+    times(times(fromBigInt(x), fromBigInt(y)), fromBigInt(z)) == times(fromBigInt(x), times(fromBigInt(y), fromBigInt(z)))
+  }
+
+  val multiplicativeIdentity: Prop = forAll { y: BigInt =>
+    times(fromBigInt(y), one) == fromBigInt(y)
+  }
+
+  val leftDistributivity: Prop = forAll { (x: BigInt, y: BigInt, z: BigInt) =>
+    val (a, b, c) = (fromBigInt(x), fromBigInt(y), fromBigInt(z))
+    times(a, plus(b, c)) == plus(times(a, b), times(a, c))
+  }
+
+  val rightDistributivity: Prop = forAll { (x: BigInt, y: BigInt, z: BigInt) =>
+    val (a, b, c) = (fromBigInt(x), fromBigInt(y), fromBigInt(z))
+    times(plus(b, c), a) == plus(times(b, a), times(c, a))
+  }
+
+  property("longNumbersWithPlusAndTimesFormARing") =
+    all(
+      associativeAddition, commutativeAddition, additiveIdentity, additiveInverses, // abelian group under plus
+      associativeMultiplication, multiplicativeIdentity, // monoid under times
+      leftDistributivity, rightDistributivity // times is distributive with respect to plus
+    )
 }
