@@ -24,73 +24,41 @@ class LongNumberNumericSpec extends Properties("LongNumberNumericSpec") {
     fromBigInt(x).toBigInt == x
   }
 
-  val numSafeForAddition: Gen[Int] = Gen.chooseNum(Int.MinValue / 2, Int.MaxValue / 2)
+  val safeIntForAddition: Gen[Int] = Gen.chooseNum(Int.MinValue / 2, Int.MaxValue / 2)
 
-  val posNumSafeForAddition: Gen[Int] = Gen.chooseNum(0, Int.MaxValue / 2)
+  property("intPlusInt") = forAll(safeIntForAddition, safeIntForAddition) { (x: Int, y: Int) =>
+    plus(fromInt(x), fromInt(y)) == fromInt(x + y)
+  }
 
-  val negNumSafeForAddition: Gen[Int] = Gen.chooseNum(Int.MinValue / 2, 0)
+  property("intMinusInt") = forAll(safeIntForAddition, safeIntForAddition) { (x: Int, y: Int) =>
+    minus(fromInt(x), fromInt(y)) == fromInt(x - y)
+  }
 
-  property("positiveIntPlusPositiveInt") = forAll(posNumSafeForAddition, posNumSafeForAddition) { (x: Int, y: Int) =>
+  property("bigIntPlusBigInt") = forAll { (x: BigInt, y: BigInt) =>
     plus(fromBigInt(x), fromBigInt(y)) == fromBigInt(x + y)
   }
 
-  property("positiveIntPlusNegativeInt") = forAll(posNumSafeForAddition, negNumSafeForAddition) { (x: Int, y: Int) =>
-    plus(fromBigInt(x), fromBigInt(y)) == fromBigInt(x + y)
-  }
-
-  property("negativeIntPlusPositiveInt") = forAll(negNumSafeForAddition, posNumSafeForAddition) { (x: Int, y: Int) =>
-    plus(fromBigInt(x), fromBigInt(y)) == fromBigInt(x + y)
-  }
-
-  property("negativeIntPlusNegativeInt") = forAll(negNumSafeForAddition, negNumSafeForAddition) { (x: Int, y: Int) =>
-    plus(fromBigInt(x), fromBigInt(y)) == fromBigInt(x + y)
-  }
-
-  property("intPlusInt") = forAll(numSafeForAddition, numSafeForAddition) { (x: Int, y: Int) =>
-    plus(fromBigInt(x), fromBigInt(y)) == fromBigInt(x + y)
-  }
-
-  property("positiveIntMinusPositiveInt") = forAll(posNumSafeForAddition, posNumSafeForAddition) { (x: Int, y: Int) =>
+  property("bigIntMinusBigInt") = forAll { (x: BigInt, y: BigInt) =>
     minus(fromBigInt(x), fromBigInt(y)) == fromBigInt(x - y)
   }
-
-  property("positiveIntMinusNegativeInt") = forAll(posNumSafeForAddition, negNumSafeForAddition) { (x: Int, y: Int) =>
-    minus(fromBigInt(x), fromBigInt(y)) == fromBigInt(x - y)
-  }
-
-  property("negativeIntMinusPositiveInt") = forAll(negNumSafeForAddition, posNumSafeForAddition) { (x: Int, y: Int) =>
-    minus(fromBigInt(x), fromBigInt(y)) == fromBigInt(x - y)
-  }
-
-  property("negativeIntMinusNegativeInt") = forAll(negNumSafeForAddition, negNumSafeForAddition) { (x: Int, y: Int) =>
-    minus(fromBigInt(x), fromBigInt(y)) == fromBigInt(x - y)
-  }
-
-  property("intMinusInt") = forAll(numSafeForAddition, numSafeForAddition) { (x: Int, y: Int) =>
-    minus(fromBigInt(x), fromBigInt(y)) == fromBigInt(x - y)
-  }
-
-  //  property("positiveBigIntTimesPositiveInt") = forAll(Arbitrary.arbBigInt.arbitrary, Arbitrary.arbBigInt.arbitrary) { (x: BigInt, y: BigInt) =>
-  //    times(fromBigInt(x), fromBigInt(y)) == fromBigInt(x * y)
-  //  }
 
   property("longNumbersExpressionsMustBeUnique") = throws(classOf[IllegalArgumentException]) {
     LongNumber(Seq(0, 1), isNegative = false)
   }
 
-  val associativeAddition: Prop = forAll(numSafeForAddition, numSafeForAddition, numSafeForAddition) { (x: Int, y: Int, z: Int) =>
+  val associativeAddition: Prop = forAll { (x: BigInt, y: BigInt, z: BigInt) =>
     plus(plus(fromBigInt(x), fromBigInt(y)), fromBigInt(z)) == plus(fromBigInt(x), plus(fromBigInt(y), fromBigInt(z)))
   }
 
-  val commutativeAddition: Prop = forAll(numSafeForAddition, numSafeForAddition) { (x: Int, y: Int) =>
+  val commutativeAddition: Prop = forAll { (x: BigInt, y: BigInt) =>
     plus(fromBigInt(x), fromBigInt(y)) == plus(fromBigInt(y), fromBigInt(x))
   }
 
-  val additiveIdentity: Prop = forAll(numSafeForAddition) { y: Int =>
+  val additiveIdentity: Prop = forAll { y: BigInt =>
     plus(fromBigInt(y), zero) == fromBigInt(y)
   }
 
-  val additiveInverses: Prop = forAll(numSafeForAddition) { x: Int =>
+  val additiveInverses: Prop = forAll { x: BigInt =>
     plus(fromBigInt(x), negate(fromBigInt(x))) == zero
   }
 
