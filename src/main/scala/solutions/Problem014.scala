@@ -1,11 +1,11 @@
 package solutions
 
 import scala.annotation.tailrec
-import scala.concurrent.Future
-
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
-object Problem014 {
+object Problem014 extends App {
   def nextCollatzNumber(num: Long): Long =
     if (num % 2 == 0) num / 2 else num * 3 + 1
 
@@ -49,4 +49,13 @@ object Problem014 {
     val rule2: Boolean = (num - 1) % 3 == 0 && ((num - 1) / 3) % 2 == 1
     rule1 || rule2
   }
+
+  val start: Future[Long] = longestChain()
+  val length: Future[(Long, Long)] = start.flatMap(s => numbersInCollatzSequence(s)().map(res => (s, res)))
+
+  println(Await.result(
+    length.map { len =>
+      println(s"Problem14 answer: Longest chain of length ${len._2} from start number ${len._1}")
+    },
+    Duration.Inf))
 }

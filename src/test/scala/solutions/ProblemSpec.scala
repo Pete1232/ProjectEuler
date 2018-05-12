@@ -161,8 +161,4 @@ class ProblemSpec {
   def problem012TestHasKDivisors(): Unit = {
     assertEquals(28, Problem012.hasKDivisors(k = 5))
   }
-
-  def problem013Test(): Unit = {
-    assertEquals(10, Problem013.sumLastDigit(Seq("1234", "4321", "2341", "3214")))
-  }
 }
