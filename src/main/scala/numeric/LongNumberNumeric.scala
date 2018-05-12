@@ -2,8 +2,6 @@ package numeric
 
 import scala.annotation.tailrec
 
-trait Test
-
 trait LongNumberNumeric extends Numeric[LongNumber] {
 
   override def plus(x: LongNumber, y: LongNumber): LongNumber = {

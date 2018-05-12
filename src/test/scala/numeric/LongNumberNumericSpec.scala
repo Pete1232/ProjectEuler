@@ -1,8 +1,8 @@
 package numeric
 
-import numeric.LongNumber.Numeric._
+import numeric.LongNumber.dataMonoidForLongNumber._
 import numeric.LongNumber.fromBigInt
-import org.scalacheck.Prop.{all, forAll, forAllNoShrink, propBoolean, throws}
+import org.scalacheck.Prop.{all, forAll, propBoolean, throws}
 import org.scalacheck.{Gen, Prop, Properties}
 
 class LongNumberNumericSpec extends Properties("LongNumberNumericSpec") {
@@ -35,14 +35,17 @@ class LongNumberNumericSpec extends Properties("LongNumberNumericSpec") {
   }
 
   property("bigIntPlusBigInt") = forAll { (x: BigInt, y: BigInt) =>
+    fromBigInt(x) + fromBigInt(y) == fromBigInt(x * y)
     plus(fromBigInt(x), fromBigInt(y)) == fromBigInt(x + y)
   }
 
   property("bigIntMinusBigInt") = forAll { (x: BigInt, y: BigInt) =>
+    fromBigInt(x) - fromBigInt(y) == fromBigInt(x * y)
     minus(fromBigInt(x), fromBigInt(y)) == fromBigInt(x - y)
   }
 
-  property("bigIntTimesBigInt") = forAllNoShrink { (x: BigInt, y: BigInt) =>
+  property("bigIntTimesBigInt") = forAll { (x: BigInt, y: BigInt) =>
+    fromBigInt(x) * fromBigInt(y) == fromBigInt(x * y)
     times(fromBigInt(x), fromBigInt(y)) == fromBigInt(x * y)
   }
 

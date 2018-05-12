@@ -1,5 +1,7 @@
 package numeric
 
+import cats.Monoid
+
 case class LongNumber(digits: Seq[Int], isNegative: Boolean) {
   // require the number is not padded to guarantee uniqueness
   // the getOrElse covers the Nil (i.e. Zero) case - the choice of 1 is arbitrary (it is non-zero)
@@ -22,7 +24,7 @@ case class LongNumber(digits: Seq[Int], isNegative: Boolean) {
 
 object LongNumber {
 
-  implicit object Numeric extends LongNumberNumeric
+  implicit val dataMonoidForLongNumber: Monoid[LongNumber] with Numeric[LongNumber] = LongNumberMultiplicationMonoid
 
   def fromBigInt(x: BigInt): LongNumber = {
     val digits: Array[Int] = x.toString().toCharArray.map(_.asDigit)
